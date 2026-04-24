@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
-            $table->string('course number');
+            $table->string('course_number');
             $table->string('day');
             $table->unsignedBigInteger('area_id');
 
@@ -23,9 +23,9 @@ return new class extends Migration
             ->onDelete('cascade')
             ->onUpdate('cascade');
 
-            $table->unsignedBigInteger('trainig_centers');
+            $table->unsignedBigInteger('trainig_center_id');
 
-            $table->foreign('computer_id')
+            $table->foreign('trainig_center_id')
             ->references('id')
             ->on('trainig_centers')
             ->onDelete('cascade')

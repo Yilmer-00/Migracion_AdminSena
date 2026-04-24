@@ -24,9 +24,9 @@ return new class extends Migration
             ->onDelete('cascade')
             ->onUpdate('cascade');
 
-            $table->unsignedBigInteger('area_id');
+            $table->unsignedBigInteger('trainig_center_id');
 
-            $table->foreign('trainig_centers')
+            $table->foreign('trainig_center_id')
             ->references('id')
             ->on('trainig_centers')
             ->onDelete('cascade')

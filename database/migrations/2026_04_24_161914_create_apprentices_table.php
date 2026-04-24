@@ -16,6 +16,24 @@ return new class extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('cell number');
+
+            $table->unsignedBigInteger('course_id');
+
+            $table->foreign('course_id')
+            ->references('id')
+            ->on('courses')
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
+            
+
+            $table->unsignedBigInteger('computer_id');
+
+            $table->foreign('computer_id')
+            ->references('id')
+            ->on('computers')
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
+
             $table->timestamps();
         });
     }
