@@ -1,27 +1,25 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Crear Computador</title>
-</head>
-<body>
+<form action="{{ route('teacher.store') }}" method="POST">
+    @csrf
 
-    <h1>Nuevo Computador</h1>
+    <label>Nombre</label>
+    <input type="text" name="name">
 
-    <form action="{{ route('computer.store') }}" method="POST">
-        @csrf
+    <br><br>
 
-        <label>Número:</label>
-        <input type="text" name="number" required>
+    <label>Email</label>
+    <input type="email" name="email">
 
-        <br><br>
+    <br><br>
 
-        <label>Marca:</label>
-        <input type="text" name="brand" required>
+    <label>Area ID</label>
+    <input type="number" name="area_id">
 
-        <br><br>
+    <br><br>
 
-        <button type="submit">Guardar</button>
-    </form>
+    <label>Training Center ID</label>
+    <input type="number" name="training_center_id">
 
-</body>
-</html>
+    <br><br>
+
+    <button type="submit">Guardar</button>
+</form>

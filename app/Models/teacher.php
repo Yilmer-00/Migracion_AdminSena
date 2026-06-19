@@ -11,7 +11,7 @@ class teacher extends Model
 
     public function area()
     {
-        return $this->belongsTo('App\models\Area');
+        return $this->belongsTo('App\Models\Area');
     }
 
     public function courses()
