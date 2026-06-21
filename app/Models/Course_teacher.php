@@ -9,4 +9,11 @@ class Course_teacher extends Model
 {
     use HasFactory;
 
+    // Le aclaramos a Laravel el nombre exacto de la tabla en MySQL
+    protected $table = 'course_teacher';
+
+    protected $fillable = [
+        'curse_id',
+        'teacher_id',
+    ];
 }

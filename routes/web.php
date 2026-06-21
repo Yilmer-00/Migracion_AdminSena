@@ -9,6 +9,9 @@ use App\Http\Controllers\TrainigCenterController;
 use App\Http\Controllers\ComputerController;
 
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\CourseTeacherController;
+use App\Http\Controllers\ApprenticeController;
 
 
 //categoory
@@ -30,3 +33,16 @@ Route::post('/computer/store', [ComputerController::class, 'store'])->name('comp
 // Teachers
 Route::get('/teacher/create', [TeacherController::class, 'create']);
 Route::post('/teacher/store', [TeacherController::class, 'store'])->name('teacher.store');
+
+// Courses
+// Fíjate en el segundo parámetro 'registro'
+Route::get('course/registro', [CourseController::class, 'registro'])->name('course.registro');
+Route::post('course/admin', [CourseController::class, 'dato'])->name('course.admin');
+
+// Course-Teacher Assignments
+Route::get('course_teacher/registro', [CourseTeacherController::class, 'registro'])->name('course_teacher.registro');
+Route::post('course_teacher/admin', [CourseTeacherController::class, 'dato'])->name('course_teacher.admin');
+
+// Apprentices
+Route::get('/apprentice/create', [ApprenticeController::class, 'create']);
+Route::post('/apprentice/store', [ApprenticeController::class, 'store'])->name('apprentice.store');
