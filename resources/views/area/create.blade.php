@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Crear Área</title>
-</head>
-<body>
+@extends('layouts.app')
+
+@section('content')
 
     <h1>Area</h1>
 
@@ -16,5 +13,5 @@
         <button type="submit">Guardar</button>
     </form>
 
-</body>
-</html>
+
+@endsection

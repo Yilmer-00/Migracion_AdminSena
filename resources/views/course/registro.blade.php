@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="es">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <title>Registro de Cursos</title>
-</head>
-
-<body>
+@section('content')
     <h1>Crear Nuevo Curso</h1>
 
     @if(session('success'))
@@ -39,6 +33,4 @@
 
         <button type="submit">Guardar Curso</button>
     </form>
-</body>
-
-</html>
+@endsection

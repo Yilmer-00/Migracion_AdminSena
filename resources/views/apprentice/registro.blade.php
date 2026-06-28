@@ -1,13 +1,7 @@
-<html lang="en">
-<!DOCTYPE html>
-<html lang="es">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <title>Registro de Aprendices</title>
-</head>
+@section('content')
 
-<body>
     <h1>Crear Nuevo Aprendiz</h1>
 
     @if(session('success'))
@@ -43,6 +37,4 @@
 
         <button type="submit">Guardar Aprendiz</button>
     </form>
-</body>
-
-</html>
+@endsection

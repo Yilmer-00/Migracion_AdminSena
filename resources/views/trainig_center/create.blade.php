@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Crear Centro de Formación</title>
-</head>
-<body>
+@extends('layouts.app')
+
+@section('content')
 
     <h1>Nuevo Centro de Formación</h1>
 
@@ -22,6 +19,4 @@
 
         <button type="submit">Guardar</button>
     </form>
-
-</body>
-</html>
+@endsection

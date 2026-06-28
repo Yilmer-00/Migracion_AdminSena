@@ -15,23 +15,23 @@ use App\Http\Controllers\ApprenticeController;
 
 
 //categoory
-Route::get('category/create',[CategoryController::class,'create']);
+Route::get('category/create',[CategoryController::class,'create'])->name('category.create');
 Route::post('category/store',[CategoryController::class,'store'])->name('category.store');
 
 // Areas
-Route::get('/area/create', [AreaController::class, 'create']);
+Route::get('/area/create', [AreaController::class, 'create'])->name('area.create');
 Route::post('area/store', [AreaController::class, 'store'])->name('area.store');
 
 // Training Centers
-Route::get('/trainig-center/create', [TrainigCenterController::class, 'create']);
+Route::get('/trainig-center/create', [TrainigCenterController::class, 'create'])->name('trainig-center.create');
 Route::post('/trainig-center/store', [TrainigCenterController::class, 'store'])->name('trainig-center.store');
 
 // Computers
-Route::get('/computer/create', [ComputerController::class, 'create']);
+Route::get('/computer/create', [ComputerController::class, 'create'])->name('computer.create');
 Route::post('/computer/store', [ComputerController::class, 'store'])->name('computer.store');
 
 // Teachers
-Route::get('/teacher/create', [TeacherController::class, 'create']);
+Route::get('/teacher/create', [TeacherController::class, 'create'])->name('teacher.create');
 Route::post('/teacher/store', [TeacherController::class, 'store'])->name('teacher.store');
 
 // Courses
@@ -44,5 +44,8 @@ Route::get('course_teacher/registro', [CourseTeacherController::class, 'registro
 Route::post('course_teacher/admin', [CourseTeacherController::class, 'dato'])->name('course_teacher.admin');
 
 // Apprentices
-Route::get('/apprentice/create', [ApprenticeController::class, 'create']);
-Route::post('/apprentice/store', [ApprenticeController::class, 'store'])->name('apprentice.store');
+Route::get('/apprentice/create', [ApprenticeController::class, 'registro'])
+    ->name('apprentice.registro');
+
+Route::post('/apprentice/store', [ApprenticeController::class, 'dato'])
+    ->name('apprentice.store');
