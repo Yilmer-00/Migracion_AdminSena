@@ -10,13 +10,37 @@ use Illuminate\Http\Request;
 
 class ApprenticeController extends Controller
 {
+    public function edit(Apprentice $apprentice)
+    {
+        // Traemos los cursos y computadores para llenar los selects del formulario
+        $courses = Course::all();
+        $computers = Computer::all();
+
+        return view('apprentice.edit', compact('apprentice', 'courses', 'computers'));
+    }
+
+    public function update(Request $request, Apprentice $apprentice)
+    {
+        // Actualizamos el aprendiz con los datos limpios que vienen del formulario
+        $apprentice->update($request->all());
+
+        // Redireccionamos a la vista show que tanto nos gustó con un mensaje de éxito
+        return redirect()->route('apprentice.show', $apprentice)->with('success', 'Aprendiz actualizado correctamente.');
+    }
+    public function show(Apprentice $apprentice)
+    {
+        $apprentice->load(['course', 'computer']);
+
+        return view('apprentice.show', compact('apprentice'));
+    }
+
     public function index()
     {
         $apprentices = Apprentice::with('course', 'computer')->get();
 
         return view('apprentice.index', compact('apprentices'));
     }
-    
+
     public function registro()
     {
 

@@ -9,13 +9,14 @@ class apprentice extends Model
 {
     use HasFactory;
 
-    public function Computer()
-    {
-        return $this->belongsToMany('App\Models\Computer');
-    }
-
     public function course()
     {
-        return $this->belongsToMany('App\Models\Course');
+        return $this->belongsTo(Course::class, 'course_id');
+    }
+
+    // Asegúrate de que la de computadora también sea belongsTo si un aprendiz tiene un solo PC
+    public function computer()
+    {
+        return $this->belongsTo(Computer::class, 'computer_id');
     }
 }

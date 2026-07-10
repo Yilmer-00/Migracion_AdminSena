@@ -3,87 +3,86 @@
 @section('content')
 <div class="container" style="max-width: 800px; margin-top: 30px;">
     
-    <!-- Botones de Acción Rápida -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <!-- Botón de retorno -->
+    <div class="mb-3">
         <a href="{{ route('apprentice.registro') }}" class="btn btn-secondary btn-sm shadow-sm">
-            ← Volver al Listado
+            ← Cancelar y Volver
         </a>
-        <span class="text-muted fw-bold">Módulo de Aprendices</span>
     </div>
-
-    <!-- Alerta de Éxito Estilizada -->
-    @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show shadow-sm border-0 mb-4" role="alert" style="border-left: 5px solid #39A900 !important;">
-            <strong>¡Éxito!</strong> {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
 
     <!-- Tarjeta del Formulario -->
     <div class="card shadow border-0">
-        <!-- Encabezado con el Verde SENA -->
+        <!-- Encabezado elegante con el verde SENA -->
         <div class="card-header text-white py-3" style="background-color: #39A900;">
-            <h4 class="mb-0 fw-bold">📝 Registrar Nuevo Aprendiz</h4>
+            <h4 class="mb-0 fw-bold"><i class="bi bi-pencil-square"></i> Actualizar Datos del Aprendiz</h4>
         </div>
         
         <div class="card-body p-4 bg-light">
-            <form action="{{ route('apprentice.store') }}" method="POST">
+            <form action="{{ route('apprentice.update', $apprentice) }}" method="POST">
                 @csrf
+                @method('put')
 
                 <!-- Sección: Información Personal -->
-                <h5 class="text-success mb-3 border-bottom pb-2">👤 Datos Personales</h5>
+                <h5 class="text-success mb-3 border-bottom pb-2">👤 Información Personal</h5>
                 
                 <div class="row g-3 mb-4">
-                    <!-- Nombre -->
+                    <!-- Campo Nombre -->
                     <div class="col-md-6">
                         <label class="form-label fw-bold text-muted">Nombre Completo:</label>
-                        <input type="text" name="name" class="form-control shadow-sm" placeholder="Ej. Juan Pérez" required>
+                        <input type="text" name="name" class="form-control shadow-sm" 
+                               value="{{ old('name', $apprentice->name) }}" required>
                     </div>
 
-                    <!-- Email -->
+                    <!-- Campo Email -->
                     <div class="col-md-6">
                         <label class="form-label fw-bold text-muted">Correo Electrónico:</label>
-                        <input type="email" name="email" class="form-control shadow-sm" placeholder="ejemplo@misena.edu.co" required>
+                        <input type="email" name="email" class="form-control shadow-sm" 
+                               value="{{ old('email', $apprentice->email) }}" required>
                     </div>
 
-                    <!-- Celular -->
+                    <!-- Campo Número de Celular -->
                     <div class="col-md-6">
                         <label class="form-label fw-bold text-muted">Número de Celular:</label>
-                        <input type="text" name="cell_number" class="form-control shadow-sm" placeholder="3001234567" required>
+                        <input type="text" name="cell_number" class="form-control shadow-sm" 
+                               value="{{ old('cell_number', $apprentice->cell_number) }}" required>
                     </div>
                 </div>
 
-                <!-- Sección: Asignaciones -->
-                <h5 class="text-success mb-3 border-bottom pb-2">🏫 Ficha y Equipamiento</h5>
+                <!-- Sección: Asignaciones Colectivas -->
+                <h5 class="text-success mb-3 border-bottom pb-2">🏫 Asignaciones del Sistema</h5>
 
                 <div class="row g-3 mb-4">
-                    <!-- Curso asignado -->
+                    <!-- Selector Curso asignado -->
                     <div class="col-md-6">
                         <label class="form-label fw-bold text-muted">Curso Asignado (Ficha):</label>
                         <select name="course_id" class="form-select shadow-sm" required>
                             <option value="">-- Seleccione Curso --</option>
                             @foreach($courses as $course)
-                                <option value="{{ $course->id }}">Ficha: {{ $course->course_number }} - {{ $course->day }}</option>
+                                <option value="{{ $course->id }}" {{ $apprentice->course_id == $course->id ? 'selected' : '' }}>
+                                    Ficha: {{ $course->course_number }} - {{ $course->day }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
 
-                    <!-- Computador asignado -->
+                    <!-- Selector Computador asignado -->
                     <div class="col-md-6">
                         <label class="form-label fw-bold text-muted">Computador Asignado:</label>
                         <select name="computer_id" class="form-select shadow-sm" required>
                             <option value="">-- Seleccione Computador --</option>
                             @foreach($computers as $computer)
-                                <option value="{{ $computer->id }}">{{ $computer->brand }} (N° {{ $computer->number }})</option>
+                                <option value="{{ $computer->id }}" {{ $apprentice->computer_id == $computer->id ? 'selected' : '' }}>
+                                    {{ $computer->brand }} (N° {{ $computer->number }})
+                                </option>
                             @endforeach
                         </select>
                     </div>
                 </div>
 
-                <!-- Botón de Envío -->
+                <!-- Botones de Acción al pie -->
                 <div class="text-end border-top pt-3">
                     <button type="submit" class="btn btn-success px-4 shadow" style="background-color: #39A900; border: none;">
-                        💾 Guardar Aprendiz
+                        💾 Guardar Cambios
                     </button>
                 </div>
 

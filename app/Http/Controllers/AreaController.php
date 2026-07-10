@@ -7,7 +7,10 @@ use App\Models\Area;
 
 class AreaController extends Controller
 {
-    // 1. Agregamos el método para listar las áreas
+    public function show(Area $area)
+    {
+        return view('area.show', compact('area'));
+    }
     public function index()
     {
         $areas = Area::all(); // Trae todas las áreas de la base de datos

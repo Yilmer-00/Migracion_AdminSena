@@ -7,6 +7,17 @@ use App\Models\Trainig_center;
 
 class TrainigCenterController extends Controller
 {
+    public function show(Trainig_center $trainigCenter)
+    {
+        return view('trainig_center.show', compact('trainigCenter'));
+    }
+    public function index()
+    {
+        // Traemos todos los centros de formación
+        $trainingCenters = Trainig_Center::all();
+        return view('trainig-center.index', compact('trainingCenters'));
+    }
+
     public function create()
     {
         return view('trainig_center.create');
@@ -20,6 +31,4 @@ class TrainigCenterController extends Controller
 
         return $trainigCenter;
     }
-
-
 }

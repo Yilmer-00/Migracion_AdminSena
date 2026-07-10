@@ -2,18 +2,21 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Course_teacher extends model
+class Course_teacher extends Model
 {
-    use HasFactory;
+    protected $table = 'course_teachers';
 
-    // Le aclaramos a Laravel el nombre exacto de la tabla en MySQL
-    protected $table = 'course_teacher';
 
-    protected $fillable = [
-        'curse_id',
-        'teacher_id',
-    ];
+    public function course()
+    {
+        return $this->belongsTo(Course::class, 'course_id');
+    }
+
+   
+    public function teacher()
+    {
+        return $this->belongsTo(Teacher::class, 'teacher_id');
+    }
 }

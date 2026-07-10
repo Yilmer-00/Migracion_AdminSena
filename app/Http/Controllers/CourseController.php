@@ -11,13 +11,17 @@ use App\Http\Controllers\Controller;
 
 class CourseController extends Controller
 {
+    public function show(Course $course)
+    {
+        return view('course.show', compact('course'));
+    }
     public function index()
     {
         $courses = Course::with('area', 'training_center')->get();
 
         return view('course.index', compact('courses'));
     }
-    
+
     public function registro()
     {
 
