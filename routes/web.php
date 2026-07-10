@@ -38,14 +38,15 @@ Route::post('/teacher/store', [TeacherController::class, 'store'])->name('teache
 // Fíjate en el segundo parámetro 'registro'
 Route::get('course/registro', [CourseController::class, 'registro'])->name('course.registro');
 Route::post('course/admin', [CourseController::class, 'dato'])->name('course.admin');
+Route::get('/course', [CourseController::class, 'index'])->name('course.index');
 
 // Course-Teacher Assignments
 Route::get('course_teacher/registro', [CourseTeacherController::class, 'registro'])->name('course_teacher.registro');
 Route::post('course_teacher/admin', [CourseTeacherController::class, 'dato'])->name('course_teacher.admin');
 
 // Apprentices
-Route::get('/apprentice/create', [ApprenticeController::class, 'registro'])
-    ->name('apprentice.registro');
+Route::get('/apprentice', [ApprenticeController::class, 'index'])->name('apprentice.index');
+Route::get('/apprentice/create', [ApprenticeController::class, 'registro'])->name('apprentice.registro');
 
-Route::post('/apprentice/store', [ApprenticeController::class, 'dato'])
-    ->name('apprentice.store');
+Route::post('/apprentice/store', [ApprenticeController::class, 'dato'])->name('apprentice.store');
+

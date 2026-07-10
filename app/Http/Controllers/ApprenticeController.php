@@ -10,13 +10,21 @@ use Illuminate\Http\Request;
 
 class ApprenticeController extends Controller
 {
-    public function registro(){
+    public function index()
+    {
+        $apprentices = Apprentice::with('course', 'computer')->get();
 
-     $courses=Course::all();
-     $computers=Computer::all();
-        return view('apprentice.registro',compact('courses','computers'));
+        return view('apprentice.index', compact('apprentices'));
     }
     
+    public function registro()
+    {
+
+        $courses = Course::all();
+        $computers = Computer::all();
+        return view('apprentice.registro', compact('courses', 'computers'));
+    }
+
     public function dato(Request $request)
     {
         $apprentice = new Apprentice();
@@ -28,9 +36,5 @@ class ApprenticeController extends Controller
         $apprentice->save();
 
         return redirect()->back()->with('success', 'Aprendiz registrado con éxito.');
-
     }
-
-
-    
 }
