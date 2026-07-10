@@ -1,3 +1,7 @@
+@extends('layouts.app')
+
+@section('content')
+
 <form action="{{ route('teacher.store') }}" method="POST">
     @csrf
 
@@ -33,3 +37,5 @@
         Guardar
     </button>
 </form>
+
+@endsection

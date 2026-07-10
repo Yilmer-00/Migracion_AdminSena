@@ -19,6 +19,7 @@ Route::get('category/create',[CategoryController::class,'create'])->name('catego
 Route::post('category/store',[CategoryController::class,'store'])->name('category.store');
 
 // Areas
+Route::get('/areas', [AreaController::class, 'index'])->name('area.index');
 Route::get('/area/create', [AreaController::class, 'create'])->name('area.create');
 Route::post('area/store', [AreaController::class, 'store'])->name('area.store');
 
@@ -35,7 +36,7 @@ Route::get('/teacher/create', [TeacherController::class, 'create'])->name('teach
 Route::post('/teacher/store', [TeacherController::class, 'store'])->name('teacher.store');
 
 // Courses
-// Fíjate en el segundo parámetro 'registro'
+
 Route::get('course/registro', [CourseController::class, 'registro'])->name('course.registro');
 Route::post('course/admin', [CourseController::class, 'dato'])->name('course.admin');
 Route::get('/course', [CourseController::class, 'index'])->name('course.index');

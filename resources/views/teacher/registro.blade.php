@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html lang="es">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <title>Asignación Curso - Instructor</title>
-</head>
-
+@section('content')
 <body>
     <h1>Asignar Instructor a Curso</h1>
 
@@ -37,3 +32,5 @@
 </body>
 
 </html>
+
+@endsection

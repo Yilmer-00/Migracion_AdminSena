@@ -1,30 +1,44 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="container" style="max-width: 600px; margin-top: 20px;">
+    <h2>Registrar Computador</h2>
+    <hr>
 
-<form action="{{ route('teacher.store') }}" method="POST">
-    @csrf
+    {{-- Mensaje de éxito --}}
+    @if(session('success'))
+        <div style="color: green; background-color: #d4edda; padding: 10px; margin-bottom: 15px; border-radius: 5px;">
+            {{ session('success') }}
+        </div>
+    @endif
 
-    <label>Nombre</label>
-    <input type="text" name="name">
+    {{-- El formulario ahora apunta a computer.store --}}
+    <form action="{{ route('computer.store') }}" method="POST">
+        @csrf
 
-    <br><br>
+        <div>
+            <label>Número de Computador</label><br>
+            <input type="text" name="number" value="{{ old('number') }}" style="width: 100%; padding: 8px; margin-top: 5px;">
+            @error('number')
+                <small style="color: red;">{{ $message }}</small>
+            @enderror
+        </div>
 
-    <label>Email</label>
-    <input type="email" name="email">
+        <br>
 
-    <br><br>
+        <div>
+            <label>Marca (Brand)</label><br>
+            <input type="text" name="brand" value="{{ old('brand') }}" style="width: 100%; padding: 8px; margin-top: 5px;">
+            @error('brand')
+                <small style="color: red;">{{ $message }}</small>
+            @enderror
+        </div>
 
-    <label>Area ID</label>
-    <input type="number" name="area_id">
+        <br>
 
-    <br><br>
-
-    <label>Training Center ID</label>
-    <input type="number" name="training_center_id">
-
-    <br><br>
-
-    <button type="submit">Guardar</button>
-</form>
+        <button type="submit" style="padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            Guardar Computador
+        </button>
+    </form>
+</div>
 @endsection
