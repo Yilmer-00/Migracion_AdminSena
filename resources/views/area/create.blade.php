@@ -1,17 +1,53 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="container" style="max-width: 600px; margin-top: 30px;">
 
-    <h1>Area</h1>
+    <!-- Botones de Navegación Rápida -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <a href="{{ route('area.create') }}" class="btn btn-secondary btn-sm shadow-sm">
+            ← Volver al Listado
+        </a>
+        <span class="text-muted fw-bold">Módulo de Áreas</span>
+    </div>
 
-    <form action="{{ route('area.store') }}" method="POST">
-        @csrf
+    <!-- Alerta de Éxito Estilizada -->
+    @if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show shadow-sm border-0 mb-4" role="alert" style="border-left: 5px solid #39A900 !important;">
+        <strong>¡Éxito!</strong> {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
 
-        <label>Nombre:</label>
-        <input type="text" name="name" required>
+    <!-- Tarjeta del Formulario -->
+    <div class="card shadow border-0">
+        <!-- Encabezado con el Verde SENA -->
+        <div class="card-header text-white py-3" style="background-color: #39A900;">
+            <h4 class="mb-0 fw-bold">➕ Registrar Nueva Área</h4>
+        </div>
 
-        <button type="submit">Guardar</button>
-    </form>
+        <div class="card-body p-4 bg-light">
+            <form action="{{ route('area.store') }}" method="POST">
+                @csrf
 
+                <!-- Sección: Información del Área -->
+                <h5 class="text-success mb-3 border-bottom pb-2">📂 Datos del Área</h5>
 
+                <div class="mb-4">
+                    <!-- Nombre del Área -->
+                    <label class="form-label fw-bold text-muted">Nombre del Área:</label>
+                    <input type="text" name="name" class="form-control shadow-sm" placeholder="Ej. Análisis y Desarrollo de Software" required>
+                </div>
+
+                <!-- Botón de Registro -->
+                <div class="text-end border-top pt-3">
+                    <button type="submit" class="btn btn-success px-4 shadow" style="background-color: #39A900; border: none;">
+                        💾 Guardar Área
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
 @endsection

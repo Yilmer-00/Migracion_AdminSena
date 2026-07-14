@@ -24,9 +24,12 @@ class TeacherController extends Controller
     }
     public function create()
     {
-        $areas = Area::all();
-        $centers = Trainig_Center::all();
-        return view('teacher.create', compact('areas', 'centers'));
+        $areas = Area::select('id', 'name')->orderBy('name', 'asc')->get();
+
+        // Aquí la llamamos $training_centers (con la "i" correcta para que coincida con tu vista)
+        $trainig_centers = Trainig_center::select('id', 'name')->orderBy('name', 'asc')->get();
+
+        return view('teacher.create', compact('areas', 'trainig_centers'));
     }
 
     public function store(Request $request)

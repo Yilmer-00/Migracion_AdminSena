@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Area;
+use App\Models\Trainig_center;
 
 class AreaController extends Controller
 {
@@ -19,6 +20,12 @@ class AreaController extends Controller
 
     public function create()
     {
+        // Traemos solo las columnas que el formulario necesita (id y name) para ahorrar memoria
+        $areas = Area::select('id', 'name')->orderBy('name', 'asc')->get();
+
+        // Traemos los centros de formación ordenados alfabéticamente
+        $trainig_centers = Trainig_center::select('id', 'name')->orderBy('name', 'asc')->get();
+
         return view('area.create');
     }
 
