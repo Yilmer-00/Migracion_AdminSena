@@ -7,6 +7,20 @@ use App\Models\Computer;
 
 class ComputerController extends Controller
 {
+    public function edit(Computer $computer)
+    {
+        // Retornamos la vista de edición pasándole el computador actual
+        return view('computer.edit', compact('computer'));
+    }
+
+    public function update(Request $request, Computer $computer)
+    {
+        // Actualizamos los datos del equipo
+        $computer->update($request->all());
+
+        // Redireccionamos al listado index con el mensaje de éxito
+        return redirect()->route('computer.index')->with('success', 'Computador actualizado correctamente.');
+    }
     public function show(Computer $computer)
     {
         return view('computer.show', compact('computer'));

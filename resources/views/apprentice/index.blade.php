@@ -30,10 +30,21 @@
                 <td>{{ $apprentice->course->course_number }}</td>
                 <td>{{ $apprentice->computer->brand }}</td>
 
-                <td>
-                    <a href="{{ route('apprentice.show', $apprentice->id) }}" class="btn btn-primary btn-sm">
-                        Mostrar
-                    </a>
+                <td class="text-center">
+                    <!-- Contenedor flexible para alinear los botones en horizontal -->
+                    <div class="d-flex gap-2 justify-content-center">
+
+                        <!-- Botón Mostrar (El azul que ya tienes) -->
+                        <a href="{{ route('apprentice.show', $apprentice->id) }}" class="btn btn-primary btn-sm shadow-sm">
+                            👁️ Mostrar
+                        </a>
+
+                        <!-- Botón Editar (El nuevo que vamos a conectar) -->
+                        <a href="{{ route('apprentice.edit', $apprentice->id) }}" class="btn btn-warning btn-sm text-dark shadow-smfw-bold">
+                            ✏️ Editar
+                        </a>
+
+                    </div>
                 </td>
             </tr>
             @endforeach

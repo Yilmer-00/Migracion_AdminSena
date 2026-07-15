@@ -11,6 +11,24 @@ use App\Http\Controllers\Controller;
 
 class CourseController extends Controller
 {
+    public function edit(Course $course)
+    {
+        // Traemos todas las áreas y centros de formación para llenar los <select> del formulario
+        $areas = Area::all();
+        $trainigCenters = Trainig_Center::all(); // Respetando la ortografía 'trainig' de tu proyecto
+
+        // Retornamos la vista de edición enviando el curso actual y las listas para los select
+        return view('course.edit', compact('course', 'areas', 'trainigCenters'));
+    }
+
+    public function update(Request $request, Course $course)
+    {
+        // Actualizamos los datos del curso con la información del formulario
+        $course->update($request->all());
+
+        // Redireccionamos al listado de cursos con un mensaje de éxito
+        return redirect()->route('course.index')->with('success', 'Curso actualizado correctamente.');
+    }
     public function show(Course $course)
     {
         return view('course.show', compact('course'));

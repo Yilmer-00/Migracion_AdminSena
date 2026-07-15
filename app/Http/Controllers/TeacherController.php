@@ -9,6 +9,24 @@ use App\Models\Trainig_Center;
 
 class TeacherController extends Controller
 {
+    public function edit(Teacher $teacher)
+    {
+        // Traemos las áreas y centros para llenar los select del formulario
+        $areas = Area::all();
+        $trainingCenters = Trainig_Center::all(); // Usamos tu modelo TrainigCenter
+
+        // Retornamos la vista con el profesor y las colecciones correspondientes
+        return view('teacher.edit', compact('teacher', 'areas', 'trainingCenters'));
+    }
+
+    public function update(Request $request, Teacher $teacher)
+    {
+        // Actualizamos al profesor con los nuevos datos del formulario
+        $teacher->update($request->all());
+
+        // Redireccionamos al index con el mensaje de éxito
+        return redirect()->route('teacher.index')->with('success', 'Profesor actualizado correctamente.');
+    }
     public function show(Teacher $teacher)
     {
         $teacher->load(['area', 'trainig_center']);
