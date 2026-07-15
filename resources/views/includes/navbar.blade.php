@@ -10,7 +10,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: #39A900 !important;">
   <div class="container-fluid">
 
-    <a class="navbar-brand d-flex align-items-center" href="{{ route('area.create') }}">
+    <a class="navbar-brand d-flex align-items-center" href="{{ url('/home') }}">
 
       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAM-jtaxKYljPzx7-TEn-u8MQWRjFmSUTMIrZAYLFB4ZfIHjBOlRQPlGA&s=10" alt="Logo" width="40" height="40" class="d-inline-block align-text-top me-2" style="border-radius: 5px;">
       <span class="fw-bold text-white">AdminSENA</span>

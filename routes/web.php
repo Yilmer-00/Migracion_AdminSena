@@ -74,3 +74,7 @@ Route::post('/apprentice/store', [ApprenticeController::class, 'dato'])->name('a
 Route::get('apprentice/{apprentice}', [ApprenticeController::class, 'show'])->name('apprentice.show');
 Route::get('apprentice/{apprentice}/edit', [ApprenticeController::class, 'edit'])->name('apprentice.edit');
 Route::put('apprentice/{apprentice}', [ApprenticeController::class, 'update'])->name('apprentice.update');
+
+//Home
+
+Route::view('/home', 'home.create');
