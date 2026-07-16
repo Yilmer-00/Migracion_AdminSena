@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
             $table->string('course_number');
-            $table->date('day');
+            $table->string('day');
             $table->unsignedBigInteger('area_id');
 
             $table->foreign('area_id')

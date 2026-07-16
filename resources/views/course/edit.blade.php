@@ -5,7 +5,7 @@
 
     <!-- Botones de Navegación Rápida -->
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <a href="{{ route('course.index') }}" class="btn btn-secondary btn-sm shadow-sm">
+        <a href="{{ url('/course/list') }}" class="btn btn-secondary btn-sm shadow-sm">
             ← Volver al Listado
         </a>
         <span class="text-muted fw-bold">Módulo de Cursos</span>

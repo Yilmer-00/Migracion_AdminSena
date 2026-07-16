@@ -5,7 +5,7 @@
     
     <!-- Botón para regresar al listado de asignaciones -->
     <div class="mb-3">
-        <a href="{{ route('course_teacher.registro') }}" class="btn btn-secondary btn-sm">
+        <a href="{{ url('/course_teacher/list') }}" class="btn btn-secondary btn-sm">
             ← Volver a Asignaciones
         </a>
     </div>

@@ -10,18 +10,16 @@ class AreaController extends Controller
 {
     public function edit(Area $area)
     {
-        // Retornamos la vista de edición pasándole el área actual
         return view('area.edit', compact('area'));
     }
 
-    public function update(Request $request, Area $area)
-    {
-        // Actualizamos los datos del área
-        $area->update($request->all());
+public function update(Request $request, Area $area)
+{
+    // Actualizamos omitiendo el _token y el _method
+    $area->update($request->except(['_token', '_method']));
 
-        // Redireccionamos al listado index con el mensaje de éxito
-        return redirect()->route('area.index')->with('success', 'Área actualizada correctamente.');
-    }
+    return redirect()->route('area.index')->with('success', 'Área actualizada correctamente.');
+}
     public function show(Area $area)
     {
         return view('area.show', compact('area'));

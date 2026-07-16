@@ -8,5 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Trainig_center extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'name',
+        'location',
+    ];
 
 }

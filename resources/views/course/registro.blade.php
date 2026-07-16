@@ -6,8 +6,8 @@
     <!-- Botones de Navegación Rápida -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <!-- Reajusté la ruta hacia el listado de cursos (habitualmente course.index). Ajusta si usas otra -->
-        <a href="{{ route('course.index') }}" class="btn btn-secondary btn-sm shadow-sm">
-            ← Volver al Listado
+        <a href="{{ url('/home')  }}" class="btn btn-secondary btn-sm shadow-sm">
+            ← Volver al inicio
         </a>
         <span class="text-muted fw-bold">Módulo de Cursos</span>
     </div>

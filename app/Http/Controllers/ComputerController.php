@@ -15,8 +15,8 @@ class ComputerController extends Controller
 
     public function update(Request $request, Computer $computer)
     {
-        // Actualizamos los datos del equipo
-        $computer->update($request->all());
+        // Actualizamos los datos del equipo omitiendo los campos de control
+        $computer->update($request->except(['_token', '_method']));
 
         // Redireccionamos al listado index con el mensaje de éxito
         return redirect()->route('computer.index')->with('success', 'Computador actualizado correctamente.');

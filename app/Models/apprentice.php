@@ -13,6 +13,13 @@ class apprentice extends Model
     {
         return $this->belongsTo(Course::class, 'course_id');
     }
+    protected $fillable = [
+        'name',
+        'email',
+        'cell_number',
+        'course_id',
+        'computer_id'
+    ];
 
     // Asegúrate de que la de computadora también sea belongsTo si un aprendiz tiene un solo PC
     public function computer()

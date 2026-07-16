@@ -5,7 +5,7 @@
     
     <!-- Botón de retorno -->
     <div class="mb-3">
-        <a href="{{ route('apprentice.registro') }}" class="btn btn-secondary btn-sm shadow-sm">
+        <a href="{{ url('/apprentice/list') }}" class="btn btn-secondary btn-sm shadow-sm">
             ← Cancelar y Volver
         </a>
     </div>

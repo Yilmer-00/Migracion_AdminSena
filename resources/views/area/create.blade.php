@@ -5,8 +5,8 @@
 
     <!-- Botones de Navegación Rápida -->
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <a href="{{ route('area.create') }}" class="btn btn-secondary btn-sm shadow-sm">
-            ← Volver al Listado
+        <a href="{{ url('/home')  }}" class="btn btn-secondary btn-sm shadow-sm">
+            ← Volver al inicio
         </a>
         <span class="text-muted fw-bold">Módulo de Áreas</span>
     </div>

@@ -18,16 +18,15 @@ class Course extends Model
     ];
 
     // Relación Uno a Muchos (Inversa) -> Un curso pertenece a un Área
-    public function area()
+    public function trainig_center()
     {
-        return $this->belongsTo('App\Models\Area', 'area_id');
+        return $this->belongsTo(Trainig_center::class, 'trainig_center_id');
     }
 
-    // Relación Uno a Muchos (Inversa) -> Un curso pertenece a un Centro de Formación
-    // OJO: En tu código tenías belongsToMany, pero según tu diagrama es belongsTo (línea directa)
-    public function training_center()
+    // Relación con el Área (por si también la estás llamando en el with)
+    public function area()
     {
-        return $this->belongsTo('App\Models\Trainig_center', 'training_center_id'); 
+        return $this->belongsTo(Area::class, 'area_id');
     }
 
     // Relación Uno a Muchos -> Un curso tiene MUCHOS aprendices

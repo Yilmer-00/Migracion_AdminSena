@@ -3,7 +3,7 @@
 @section('content')
 <div class="container" style="max-width: 750px; margin-top: 30px;">
     <div class="mb-3">
-        <a href="{{ route('trainig-center.create') }}" class="btn btn-secondary btn-sm">← Volver</a>
+        <a href="{{ url('/trainig-center/list') }}" class="btn btn-secondary btn-sm">← Volver</a>
     </div>
 
     <div class="card shadow-sm">

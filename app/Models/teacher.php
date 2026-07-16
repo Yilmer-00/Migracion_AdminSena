@@ -11,19 +11,22 @@ class teacher extends Model
 
     public function area()
     {
-        return $this->belongsTo('App\Models\Area');
+        return $this->belongsTo(Area::class, 'area_id');
     }
 
     public function courses()
     {
-        return $this->belongsToMany('App\Models\Course');
+        return $this->belongsTo(Trainig_center::class, 'trainig_center_id');
     }
 
     public function trainig_center()
     {
-        return $this->belongsTo('App\models\Trainig_center');
+        return $this->belongsTo(Trainig_center::class, 'trainig_center_id');
     }
-
-
-
+    protected $fillable = [
+        'name',       // Ejemplo: nombre del profesor
+        'email',      // Ejemplo: correo electrónico
+        // 'document', // Agrega las columnas reales de tu tabla
+        // 'specialty',
+    ];
 }

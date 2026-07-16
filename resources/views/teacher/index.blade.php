@@ -68,7 +68,7 @@
 
                                 <!-- Centro de Formación -->
                                 <td class="text-secondary small">
-                                    <i class="fas fa-building text-muted me-1"></i> {{ $teacher->training_center->name ?? 'Sin Centro' }}
+                                    <i class="fas fa-building text-muted me-1"></i> {{ $teacher->trainig_center->name ?? 'Sin Centro' }}
                                 </td>
                                 
                                 <!-- Botones de Acciones -->

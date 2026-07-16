@@ -5,7 +5,7 @@
 
     <!-- Botones de Navegación Rápida -->
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <a href="{{ route('computer.index') }}" class="btn btn-secondary btn-sm shadow-sm">
+        <a href="{{ url('/computer/list') }}" class="btn btn-secondary btn-sm shadow-sm">
             ← Volver al Listado
         </a>
         <span class="text-muted fw-bold">Módulo de Inventario PC</span>

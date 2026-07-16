@@ -21,8 +21,8 @@ class TeacherController extends Controller
 
     public function update(Request $request, Teacher $teacher)
     {
-        // Actualizamos al profesor con los nuevos datos del formulario
-        $teacher->update($request->all());
+        // Actualizamos al profesor omitiendo los campos de control de Laravel
+        $teacher->update($request->except(['_token', '_method']));
 
         // Redireccionamos al index con el mensaje de éxito
         return redirect()->route('teacher.index')->with('success', 'Profesor actualizado correctamente.');
@@ -52,14 +52,22 @@ class TeacherController extends Controller
 
     public function store(Request $request)
     {
-        $teacher = new teacher();
+        // 1. (Opcional pero muy recomendado) Valida que los datos lleguen obligatoriamente
+        $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|email',
+            'area_id' => 'required|exists:areas,id',
+            'trainig_center_id' => 'required|exists:trainig_centers,id', // Valida que exista el ID del centro
+        ]);
 
-        $teacher->name = $request->input('name');
-        $teacher->email = $request->input('email');
-        $teacher->area_id = $request->input('area_id');
-        $teacher->trainig_center_id = $request->input('training_center_id');
+        // 2. Opción si creas el objeto manualmente:
+        $teacher = new Teacher();
+        $teacher->name = $request->name;
+        $teacher->email = $request->email;
+        $teacher->area_id = $request->area_id;
+        $teacher->trainig_center_id = $request->trainig_center_id; // <-- Asegúrate de que esta línea exista y esté bien escrita
         $teacher->save();
 
-        return $teacher;
+        return redirect()->route('teacher.index')->with('success', 'Profesor creado correctamente.');
     }
 }

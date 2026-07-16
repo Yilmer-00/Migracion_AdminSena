@@ -75,6 +75,11 @@
                             <!-- Botones de Acciones -->
                             <td class="pe-4 text-center">
                                 <div class="d-flex gap-2 justify-content-center">
+                                    <!-- Botón Mostrar (Nuevo) -->
+                                    <a href="{{ route('course_teacher.show', $assignment->id) }}" class="btn btn-primary btn-sm text-white fw-semibold shadow-sm">
+                                        👁️ Mostrar
+                                    </a>
+
                                     <!-- Botón Editar -->
                                     <a href="{{ route('course_teacher.edit', $assignment->id) }}" class="btn btn-warning btn-sm text-dark fw-semibold shadow-sm">
                                         ✏️ Editar

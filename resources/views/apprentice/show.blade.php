@@ -5,8 +5,8 @@
 
     <!-- Botón para regresar al listado -->
     <div class="mb-3">
-        <a href="{{ route('apprentice.registro') }}" class="btn btn-secondary btn-sm">
-            ← Volver al Listado
+        <a href="{{ url('/apprentice/list') }}" class="btn btn-secondary btn-sm shadow-sm">
+            ← Volver al listado
         </a>
     </div>
 

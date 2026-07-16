@@ -19,13 +19,22 @@ class ApprenticeController extends Controller
         return view('apprentice.edit', compact('apprentice', 'courses', 'computers'));
     }
 
-    public function update(Request $request, Apprentice $apprentice)
+    public function update(Request $request, $id)
     {
-        // Actualizamos el aprendiz con los datos limpios que vienen del formulario
-        $apprentice->update($request->all());
+        // 1. Buscamos al aprendiz por su ID de manera manual para que no falle
+        $apprentice = \App\Models\apprentice::findOrFail($id);
 
-        // Redireccionamos a la vista show que tanto nos gustó con un mensaje de éxito
-        return redirect()->route('apprentice.show', $apprentice)->with('success', 'Aprendiz actualizado correctamente.');
+        // 2. Actualizamos los campos de manera explícita (método ultra confiable)
+        $apprentice->update([
+            'name'        => $request->name,
+            'email'       => $request->email,
+            'cell_number' => $request->cell_number, // ¡Ahora sí guardará el teléfono!
+            'course_id'   => $request->course_id,
+            'computer_id' => $request->computer_id,
+        ]);
+
+        // 3. Redireccionamos al listado con mensaje de éxito
+        return redirect()->route('apprentice.index')->with('success', 'Aprendiz actualizado correctamente.');
     }
     public function show(Apprentice $apprentice)
     {

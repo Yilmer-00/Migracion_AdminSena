@@ -15,7 +15,7 @@ class CourseController extends Controller
     {
         // Traemos todas las áreas y centros de formación para llenar los <select> del formulario
         $areas = Area::all();
-        $trainigCenters = Trainig_Center::all(); // Respetando la ortografía 'trainig' de tu proyecto
+        $trainigCenters = Trainig_center::all(); // Respetando la ortografía 'trainig' de tu proyecto
 
         // Retornamos la vista de edición enviando el curso actual y las listas para los select
         return view('course.edit', compact('course', 'areas', 'trainigCenters'));
@@ -23,8 +23,8 @@ class CourseController extends Controller
 
     public function update(Request $request, Course $course)
     {
-        // Actualizamos los datos del curso con la información del formulario
-        $course->update($request->all());
+        // Actualizamos los datos del curso omitiendo los campos de control de Laravel
+        $course->update($request->except(['_token', '_method']));
 
         // Redireccionamos al listado de cursos con un mensaje de éxito
         return redirect()->route('course.index')->with('success', 'Curso actualizado correctamente.');
@@ -35,7 +35,7 @@ class CourseController extends Controller
     }
     public function index()
     {
-        $courses = Course::with('area', 'training_center')->get();
+        $courses = Course::with('area', 'trainig_center')->get();
 
         return view('course.index', compact('courses'));
     }

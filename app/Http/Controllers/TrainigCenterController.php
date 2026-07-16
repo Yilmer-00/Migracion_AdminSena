@@ -18,13 +18,10 @@ class TrainigCenterController extends Controller
 
     public function update(Request $request, $id)
     {
-        // Buscamos el centro de formación a actualizar
-        $trainigCenter = Trainig_Center::findOrFail($id);
+        $trainigCenter = Trainig_center::findOrFail($id);
 
-        // Actualizamos con los nuevos datos recibidos del formulario
-        $trainigCenter->update($request->all());
+        $trainigCenter->update($request->except(['_token', '_method']));
 
-        // Redireccionamos al listado con un mensaje de éxito
         return redirect()->route('trainig-center.index')->with('success', 'Centro de formación actualizado correctamente.');
     }
     public function show(Trainig_Center $trainigCenter)
