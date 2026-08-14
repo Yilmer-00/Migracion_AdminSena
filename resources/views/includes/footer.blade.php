@@ -2,7 +2,7 @@
 <footer class="bg-dark text-light py-5 mt-5 border-top border-secondary" style="font-family: 'Segoe UI', Roboto, sans-serif;">
     <div class="container">
         <div class="row g-4">
-            
+
             <!-- Columna 1: Branding y Propósito -->
             <div class="col-lg-4 col-md-6">
                 <div class="d-flex align-items-center mb-3">
@@ -56,16 +56,13 @@
                                     <i class="fas fa-chevron-right me-1 small"></i> Asignaciones
                                 </a>
                             </li>
-                            <li class="mb-2">
-                                <a href="#" class="text-white-50 text-decoration-none hover-green small">
-                                    <i class="fas fa-chevron-right me-1 small"></i> Soporte TIC
-                                </a>
-                            </li>
+
+
                         </ul>
                     </div>
                 </div>
             </div>
-            
+
             <!-- Columna 3: Información del Centro de Formación -->
             <div class="col-lg-4 col-md-12">
                 <h5 class="text-white fw-bold mb-3">Centro de Operación</h5>
@@ -75,7 +72,7 @@
                 <p class="text-white-50 small mb-2">
                     <i class="fas fa-headset text-success me-2 fs-5"></i> Mesa de ayuda: +57 (602) 8224000
                 </p>
-                
+
                 <!-- Iconos de Redes Integrados Estilo Badge -->
                 <div class="mt-3">
                     <a href="https://facebook.com" class="btn btn-outline-secondary btn-sm rounded-circle me-2 social-btn" target="_blank">
@@ -116,9 +113,11 @@
     .hover-green {
         transition: all 0.25s ease-in-out;
     }
+
     .hover-green:hover {
         color: #39A900 !important;
-        padding-left: 5px; /* Sutil empujón hacia la derecha al posarse */
+        padding-left: 5px;
+        /* Sutil empujón hacia la derecha al posarse */
     }
 
     /* Estilos interactivos para los botones de las redes sociales */
@@ -132,10 +131,12 @@
         border-color: rgba(255, 255, 255, 0.15) !important;
         transition: all 0.3s ease;
     }
+
     .social-btn:hover {
         background-color: #39A900 !important;
         border-color: #39A900 !important;
-        transform: translateY(-3px); /* Pequeño salto hacia arriba */
+        transform: translateY(-3px);
+        /* Pequeño salto hacia arriba */
         box-shadow: 0 4px 10px rgba(57, 169, 0, 0.3);
     }
 </style>

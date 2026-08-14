@@ -78,3 +78,10 @@ Route::put('apprentice/{apprentice}', [ApprenticeController::class, 'update'])->
 //Home
 
 Route::view('/home', 'home.create');
+//quienes somos
+Route::view('/about', 'about.create');
+//login
+Route::view('/login', 'login.create');
+//register
+Route::view('/register', 'register.create');
+
