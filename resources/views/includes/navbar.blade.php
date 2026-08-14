@@ -23,10 +23,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active text-white" aria-current="page" href="{{ route('area.create') }}">Area</a>
+          <a class="nav-link active text-white-50" aria-current="page" href="{{ route('apprentice.registro') }}">Aprendices</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active text-white" aria-current="page" href="{{ route('apprentice.registro') }}">Aprendices</a>
+          <a class="nav-link active text-white-50" aria-current="page" href="{{ route('area.create') }}">Area</a>
         </li>
         <li class="nav-item">
           <a class="nav-link text-white-50" href="{{ route('trainig-center.create') }}">Centro de estudio</a>
@@ -39,9 +39,6 @@
         </li>
         <li class="nav-item">
           <a class="nav-link text-white-50" href="{{ route('course.registro') }}">Curso</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white-50" href="{{ route('course.registro') }}">Formularios</a>
         </li>
         <li class="nav-item">
           <a class="nav-link text-white-50" href="{{ route('course_teacher.registro') }}">Asignar</a>
