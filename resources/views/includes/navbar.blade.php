@@ -40,9 +40,7 @@
                 <li class="nav-item">
                     <a class="nav-link text-white-50" href="{{ route('course.registro') }}">Curso</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white-50" href="{{ route('course.registro') }}">Formularios</a>
-                </li>
+
                 <li class="nav-item">
                     <a class="nav-link text-white-50" href="{{ route('course_teacher.registro') }}">Asignar</a>
                 </li>
@@ -80,19 +78,18 @@
             </li>
             </ul>
             <form class="d-flex align-items-center m-0 me-4 me-lg-5" role="search">
-                <div class="input-group">
-                    <span class="input-group-text bg-white border-end-0">
-                        🔍
-                    </span>
-                    <input class="form-control border-start-0" type="search" placeholder="Buscar..." aria-label="Buscar">
-
-                    <button class="btn btn-light text-success fw-bold border" type="submit">
-                        Buscar
-                    </button>
-                </div>
             </form>
+            <a href="{{ route('notifications.index') }}"
+                class="btn position-relative text-white border-0 me-3 d-inline-flex align-items-center justify-content-center rounded-circle btn-notification-circle"
+                style="width: 40px; height: 40px; background-color: rgba(255, 255, 255, 0.2);"
+                title="Centro de Notificaciones">
+                🔔
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-danger border border-light" style="font-size: 0.7rem; padding: 0.3em 0.5em;">
+                    3
+                </span>
+            </a>
             <a href="{{ url('/login')  }}" class="btn btn-outline-light fw-bold px-4 py-2 rounded-pill shadow-sm">
-                🔑 Iniciar Sesión
+                 Iniciar Sesión
             </a>
 
 

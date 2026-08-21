@@ -14,7 +14,7 @@ class CourseTeacherController extends Controller
     {
         // Buscamos la asignación actual por su ID
         $courseTeacher = Course_Teacher::findOrFail($id);
-        
+
         // Cargamos todos los cursos y profesores para los selects
         $courses = Course::all();
         $teachers = Teacher::all();
@@ -60,5 +60,10 @@ class CourseTeacherController extends Controller
         $pivot->save();
 
         return redirect()->back()->with('success', 'Relación curso-docente registrada exitosamente');
+    }
+    public function destroy(Course_Teacher $assignment)
+    {
+        $assignment->delete();
+        return redirect()->route('course_teacher.index')->with('success', 'Asignación eliminada correctamente.');
     }
 }

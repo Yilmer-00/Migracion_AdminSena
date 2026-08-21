@@ -1,57 +1,100 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="container" style="max-width: 1100px; margin-top: 30px;">
 
-<h1>LISTAR APRENDICES</h1>
+    <!-- Botones de Navegación Rápida -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <span class="text-muted fw-bold">Módulo de Gestión de Aprendices</span>
+        <a href="{{ route('apprentice.registro') }}" class="btn btn-success btn-sm shadow-sm" style="background-color: #39A900; border: none;">
+            ➕ Registrar Nuevo Aprendiz
+        </a>
+    </div>
 
-<div class="container">
+    <!-- Alerta de Éxito -->
+    @if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show shadow-sm border-0 mb-4" role="alert" style="border-left: 5px solid #39A900 !important;">
+        <strong>¡Éxito!</strong> {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
 
+    <!-- Tarjeta con la Tabla -->
+    <div class="card shadow border-0">
+        <!-- Encabezado con el Verde SENA -->
+        <div class="card-header text-white py-3" style="background-color: #39A900;">
+            <h4 class="mb-0 fw-bold">🎓 Listado de Aprendices</h4>
+        </div>
 
-    <table id="idApprentice" class="table table-striped table-bordered" style="width:100%">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nombre</th>
-                <th>Email</th>
-                <th>Celular</th>
-                <th>Curso</th>
-                <th>Computador</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="ps-4 py-3 text-muted fw-bold" style="width: 8%;">ID</th>
+                            <th class="py-3 text-muted fw-bold" style="width: 20%;">Nombre</th>
+                            <th class="py-3 text-muted fw-bold" style="width: 20%;">Email</th>
+                            <th class="py-3 text-muted fw-bold" style="width: 15%;">Celular</th>
+                            <th class="py-3 text-muted fw-bold" style="width: 12%;">Curso / Ficha</th>
+                            <th class="py-3 text-muted fw-bold" style="width: 10%;">Computador</th>
+                            <th class="pe-4 py-3 text-center text-muted fw-bold" style="width: 15%;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($apprentices as $apprentice)
+                        <tr>
+                            <td class="ps-4 fw-bold text-secondary">{{ $apprentice->id }}</td>
+                            <td class="fw-semibold text-dark">{{ $apprentice->name }}</td>
+                            <td class="text-secondary">{{ $apprentice->email }}</td>
+                            <td class="text-secondary">{{ $apprentice->cell_number }}</td>
+                            <td>
+                                <span class="badge bg-light text-dark border">
+                                    {{ $apprentice->course->course_number ?? 'N/A' }}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="badge bg-light text-success border border-success">
+                                    {{ $apprentice->computer->brand ?? 'Sin equipo' }}
+                                </span>
+                            </td>
+                            <td class="pe-4 text-center">
+                                <div class="d-flex gap-2 justify-content-center align-items-center">
 
-        <tbody>
-            @foreach($apprentices as $apprentice)
-            <tr>
-                <td>{{ $apprentice->id }}</td>
-                <td>{{ $apprentice->name }}</td>
-                <td>{{ $apprentice->email }}</td>
-                <td>{{ $apprentice->cell_number }}</td>
-                <td>{{ $apprentice->course->course_number }}</td>
-                <td>{{ $apprentice->computer->brand }}</td>
+                                    <!-- Botón Mostrar -->
+                                    <a href="{{ route('apprentice.show', $apprentice->id) }}" class="btn btn-primary btn-sm shadow-sm">
+                                        Mostrar
+                                    </a>
 
-                <td class="text-center">
-                    <!-- Contenedor flexible para alinear los botones en horizontal -->
-                    <div class="d-flex gap-2 justify-content-center">
+                                    <!-- Botón Editar -->
+                                    <a href="{{ route('apprentice.edit', $apprentice->id) }}" class="btn btn-warning btn-sm text-dark fw-semibold shadow-sm">
+                                        Editar
+                                    </a>
 
-                        <!-- Botón Mostrar (El azul que ya tienes) -->
-                        <a href="{{ route('apprentice.show', $apprentice->id) }}" class="btn btn-primary btn-sm shadow-sm">
-                            👁️ Mostrar
-                        </a>
+                                    <!-- Botón Eliminar -->
+                                    <form action="{{ route('apprentice.destroy', $apprentice->id) }}" method="POST" class="d-inline m-0" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este aprendiz?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm shadow-sm">
+                                            Eliminar
+                                        </button>
+                                    </form>
 
-                        <!-- Botón Editar (El nuevo que vamos a conectar) -->
-                        <a href="{{ route('apprentice.edit', $apprentice->id) }}" class="btn btn-warning btn-sm text-dark shadow-smfw-bold">
-                            ✏️ Editar
-                        </a>
-
-                    </div>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-
-    </table>
-
+                                </div>
+                            </td>
+                        </tr>
+                        @empty
+                        <!-- Mensaje si la tabla está vacía -->
+                        <tr>
+                            <td colspan="7" class="text-center py-5 text-muted">
+                                <span class="fs-2 mb-2 d-block">👨‍🎓</span>
+                                No hay aprendices registrados en el sistema.
+                            </td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
-
 @endsection

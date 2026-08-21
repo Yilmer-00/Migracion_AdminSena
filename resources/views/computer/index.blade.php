@@ -13,10 +13,10 @@
 
     <!-- Alerta de Éxito -->
     @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show shadow-sm border-0 mb-4" role="alert" style="border-left: 5px solid #39A900 !important;">
-            <strong>¡Éxito!</strong> {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
+    <div class="alert alert-success alert-dismissible fade show shadow-sm border-0 mb-4" role="alert" style="border-left: 5px solid #39A900 !important;">
+        <strong>¡Éxito!</strong> {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
     @endif
 
     <!-- Tarjeta con la Tabla -->
@@ -39,31 +39,43 @@
                     </thead>
                     <tbody>
                         @forelse($computers as $computer)
-                            <tr>
-                                <td class="ps-4 fw-bold text-secondary">{{ $computer->id }}</td>
-                                <td class="fw-semibold text-dark">{{ $computer->number }}</td>
-                                <td class="text-secondary">{{ $computer->brand }}</td>
-                                <td class="pe-4 text-center">
-                                    <div class="d-flex gap-2 justify-content-center">
-                                        <!-- Botón Mostrar -->
-                                        <a href="{{ route('computer.show', $computer->id) }}" class="btn btn-primary btn-sm shadow-sm">
-                                            👁️ Mostrar
-                                        </a>
-                                        <!-- Botón Editar -->
-                                        <a href="{{ route('computer.edit', $computer->id) }}" class="btn btn-warning btn-sm text-dark fw-semibold shadow-sm">
-                                            ✏️ Editar
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td class="ps-4 fw-bold text-secondary">{{ $computer->id }}</td>
+                            <td class="fw-semibold text-dark">{{ $computer->number }}</td>
+                            <td class="text-secondary">{{ $computer->brand }}</td>
+                            <td class="pe-4 text-center">
+                                <div class="d-flex gap-2 justify-content-center align-items-center">
+
+                                    <!-- Botón Mostrar -->
+                                    <a href="{{ route('computer.show', $computer->id) }}" class="btn btn-primary btn-sm shadow-sm">
+                                         Mostrar
+                                    </a>
+
+                                    <!-- Botón Editar -->
+                                    <a href="{{ route('computer.edit', $computer->id) }}" class="btn btn-warning btn-sm text-dark fw-semibold shadow-sm">
+                                         Editar
+                                    </a>
+
+                                    <!-- Botón Eliminar -->
+                                    <form action="{{ route('computer.destroy', $computer->id) }}" method="POST" class="d-inline m-0" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este computador?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm shadow-sm">
+                                             Eliminar
+                                        </button>
+                                    </form>
+
+                                </div>
+                            </td>
+                        </tr>
                         @empty
-                            <!-- Mensaje si la tabla está vacía -->
-                            <tr>
-                                <td colspan="4" class="text-center py-5 text-muted">
-                                    <i class="fas fa-laptop fs-2 mb-3 d-block text-secondary"></i>
-                                    No hay computadores registrados en el inventario.
-                                </td>
-                            </tr>
+                        <!-- Mensaje si la tabla está vacía -->
+                        <tr>
+                            <td colspan="4" class="text-center py-5 text-muted">
+                                <i class="fas fa-laptop fs-2 mb-3 d-block text-secondary"></i>
+                                No hay computadores registrados en el inventario.
+                            </td>
+                        </tr>
                         @endforelse
                     </tbody>
                 </table>

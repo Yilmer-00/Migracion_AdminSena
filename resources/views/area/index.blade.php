@@ -14,10 +14,10 @@
 
     <!-- Alerta de Éxito Estilizada -->
     @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show shadow-sm border-0 mb-4" role="alert" style="border-left: 5px solid #39A900 !important;">
-            <strong>¡Éxito!</strong> {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
+    <div class="alert alert-success alert-dismissible fade show shadow-sm border-0 mb-4" role="alert" style="border-left: 5px solid #39A900 !important;">
+        <strong>¡Éxito!</strong> {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
     @endif
 
     <!-- Tarjeta que contiene la Tabla -->
@@ -40,40 +40,51 @@
                     </thead>
                     <tbody>
                         @forelse($areas as $area)
-                            <tr>
-                                <!-- ID del Área -->
-                                <td class="ps-4 fw-bold text-secondary">
-                                    {{ $area->id }}
-                                </td>
-                                
-                                <!-- Nombre del Área -->
-                                <td class="fw-semibold text-dark">
-                                    {{ $area->name }}
-                                </td>
-                                
-                                <!-- Botones de Acciones Conectados -->
-                                <td class="pe-4">
-                                    <div class="d-flex gap-2 justify-content-center">
-                                        <!-- Botón Ver Detalles -->
-                                        <a href="{{ route('area.show', $area->id) }}" class="btn btn-primary btn-sm shadow-sm">
-                                            👁️ Mostrar
-                                        </a>
+                        <tr>
+                            <!-- ID del Área -->
+                            <td class="ps-4 fw-bold text-secondary">
+                                {{ $area->id }}
+                            </td>
 
-                                        <!-- Botón Editar -->
-                                        <a href="{{ route('area.edit', $area->id) }}" class="btn btn-warning btn-sm text-dark fw-semibold shadow-sm">
-                                            ✏️ Editar
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
+                            <!-- Nombre del Área -->
+                            <td class="fw-semibold text-dark">
+                                {{ $area->name }}
+                            </td>
+
+                            <!-- Botones de Acciones Conectados -->
+                            <td class="pe-4">
+                                <div class="d-flex gap-2 justify-content-center align-items-center">
+
+                                    <!-- Botón Mostrar -->
+                                    <a href="{{ route('area.show', $area->id) }}" class="btn btn-primary btn-sm shadow-sm">
+                                         Mostrar
+                                    </a>
+
+                                    <!-- Botón Editar -->
+                                    <a href="{{ route('area.edit', $area->id) }}" class="btn btn-warning btn-sm text-dark fw-semibold shadow-sm">
+                                         Editar
+                                    </a>
+
+                                    <!-- Botón Eliminar -->
+                                    <form action="{{ route('area.destroy', $area->id) }}" method="POST" class="d-inline m-0" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta área?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm shadow-sm">
+                                             Eliminar
+                                        </button>
+                                    </form>
+
+                                </div>
+                            </td>
+                        </tr>
                         @empty
-                            <!-- Mensaje por si aún no hay áreas registradas -->
-                            <tr>
-                                <td colspan="3" class="text-center py-5 text-muted">
-                                    <i class="fas fa-folder-open fs-2 mb-3 d-block text-secondary"></i>
-                                    No hay áreas registradas en el sistema.
-                                </td>
-                            </tr>
+                        <!-- Mensaje por si aún no hay áreas registradas -->
+                        <tr>
+                            <td colspan="3" class="text-center py-5 text-muted">
+                                <i class="fas fa-folder-open fs-2 mb-3 d-block text-secondary"></i>
+                                No hay áreas registradas en el sistema.
+                            </td>
+                        </tr>
                         @endforelse
                     </tbody>
                 </table>

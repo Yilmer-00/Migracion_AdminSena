@@ -44,4 +44,10 @@ class ComputerController extends Controller
 
         return $computer;
     }
+    public function destroy(Computer $computer)
+    {
+        $computer->delete();
+        return redirect()->route('computer.index')->with('success', 'Computador eliminado correctamente.');
+    }
+
 }
