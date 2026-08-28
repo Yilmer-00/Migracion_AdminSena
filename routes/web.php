@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OperacionesController;
 use App\Http\Controllers\CategoryController;
+use Illuminate\Http\Request;
 
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\TrainigCenterController;
@@ -15,8 +16,8 @@ use App\Http\Controllers\ApprenticeController;
 
 
 //categoory
-Route::get('category/create',[CategoryController::class,'create'])->name('category.create');
-Route::post('category/store',[CategoryController::class,'store'])->name('category.store');
+Route::get('category/create', [CategoryController::class, 'create'])->name('category.create');
+Route::post('category/store', [CategoryController::class, 'store'])->name('category.store');
 
 //Areas
 Route::get('/areas/list', [AreaController::class, 'index'])->name('area.index');
@@ -96,3 +97,28 @@ Route::view('/notifications', 'notification.index')->name('notifications.index')
 //oferta
 Route::view('/offers', 'offer.index')->name('offer.index');
 
+Route::view('/login', 'login.create')->name('login');
+
+// Procesar inicio de sesión simulado (Sin Base de Datos)
+Route::post('/login', function (Request $request) {
+    $role = $request->input('role', 'Aprendiz');
+    $name = ($role === 'Admin') ? 'Administrador SENA' : 'Yilmer Melenge';
+    $email = ($role === 'Admin') ? 'admin@sena.edu.co' : 'aprendiz@sena.edu.co';
+
+    // Guardar usuario simulado en la sesión
+    session([
+        'user' => [
+            'name' => $name,
+            'email' => $email,
+            'role' => $role
+        ]
+    ]);
+    //profile
+    return redirect()->route('carnet.index');
+})->name('login.post');
+
+// Cerrar sesión
+Route::post('/logout', function () {
+    session()->forget('user');
+    return redirect()->route('login');
+})->name('logout');
