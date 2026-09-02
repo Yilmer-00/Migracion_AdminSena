@@ -73,16 +73,27 @@
 
                             <!-- Botones de Acciones -->
                             <td class="pe-4 text-center">
-                                <div class="d-flex gap-2 justify-content-center">
+                                <div class="d-flex gap-2 justify-content-center align-items-center">
+
                                     <!-- Botón Mostrar -->
                                     <a href="{{ route('course.show', $course->id) }}" class="btn btn-primary btn-sm shadow-sm">
-                                        👁️ Mostrar
+                                         Mostrar
                                     </a>
 
                                     <!-- Botón Editar -->
                                     <a href="{{ route('course.edit', $course->id) }}" class="btn btn-warning btn-sm text-dark fw-semibold shadow-sm">
-                                        ✏️ Editar
+                                         Editar
                                     </a>
+
+                                    <!-- Botón Eliminar -->
+                                    <form action="{{ route('course.destroy', $course->id) }}" method="POST" class="d-inline m-0" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este curso?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm shadow-sm">
+                                             Eliminar
+                                        </button>
+                                    </form>
+
                                 </div>
                             </td>
                         </tr>

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OperacionesController;
 use App\Http\Controllers\CategoryController;
+use Illuminate\Http\Request;
 
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\TrainigCenterController;
@@ -15,8 +16,8 @@ use App\Http\Controllers\ApprenticeController;
 
 
 //categoory
-Route::get('category/create',[CategoryController::class,'create'])->name('category.create');
-Route::post('category/store',[CategoryController::class,'store'])->name('category.store');
+Route::get('category/create', [CategoryController::class, 'create'])->name('category.create');
+Route::post('category/store', [CategoryController::class, 'store'])->name('category.store');
 
 //Areas
 Route::get('/areas/list', [AreaController::class, 'index'])->name('area.index');
@@ -25,6 +26,8 @@ Route::post('area/store', [AreaController::class, 'store'])->name('area.store');
 Route::get('area/{area}', [AreaController::class, 'show'])->name('area.show');
 Route::get('area/{area}/edit', [AreaController::class, 'edit'])->name('area.edit');
 Route::put('area/{area}', [AreaController::class, 'update'])->name('area.update');
+Route::delete('area/{area}', [AreaController::class, 'destroy'])->name('area.destroy');
+
 
 // Training Centers
 Route::get('/trainig-center/list', [TrainigCenterController::class, 'index'])->name('trainig-center.index');
@@ -41,6 +44,7 @@ Route::post('/computer/store', [ComputerController::class, 'store'])->name('comp
 Route::get('computer/{computer}', [ComputerController::class, 'show'])->name('computer.show');
 Route::get('computer/{computer}/edit', [ComputerController::class, 'edit'])->name('computer.edit');
 Route::put('computer/{computer}', [ComputerController::class, 'update'])->name('computer.update');
+Route::delete('computer/{computer}', [ComputerController::class, 'destroy'])->name('computer.destroy');
 
 // Teachers
 Route::get('/teacher/list', [TeacherController::class, 'index'])->name('teacher.index');
@@ -49,6 +53,7 @@ Route::post('/teacher/store', [TeacherController::class, 'store'])->name('teache
 Route::get('teacher/{teacher}', [TeacherController::class, 'show'])->name('teacher.show');
 Route::get('teacher/{teacher}/edit', [TeacherController::class, 'edit'])->name('teacher.edit');
 Route::put('teacher/{teacher}', [TeacherController::class, 'update'])->name('teacher.update');
+Route::delete('teacher/{teacher}', [TeacherController::class, 'destroy'])->name('teacher.destroy');
 
 // Courses
 
@@ -58,6 +63,7 @@ Route::get('/course/list', [CourseController::class, 'index'])->name('course.ind
 Route::get('course/{course}', [CourseController::class, 'show'])->name('course.show');
 Route::get('course/{course}/edit', [CourseController::class, 'edit'])->name('course.edit');
 Route::put('course/{course}', [CourseController::class, 'update'])->name('course.update');
+Route::delete('course/{course}', [CourseController::class, 'destroy'])->name('course.destroy');
 
 // Course-Teacher Assignments
 Route::get('course_teacher/list', [CourseTeacherController::class, 'index'])->name('course_teacher.index');
@@ -66,6 +72,7 @@ Route::post('course_teacher/admin', [CourseTeacherController::class, 'dato'])->n
 Route::get('course_teacher/{courseTeacher}', [CourseTeacherController::class, 'show'])->name('course_teacher.show');
 Route::get('course_teacher/{courseTeacher}/edit', [CourseTeacherController::class, 'edit'])->name('course_teacher.edit');
 Route::put('course_teacher/{courseTeacher}', [CourseTeacherController::class, 'update'])->name('course_teacher.update');
+Route::delete('course_teacher/{assignment}', [CourseTeacherController::class, 'destroy'])->name('course_teacher.destroy');
 
 // Apprentices
 Route::get('/apprentice/list', [ApprenticeController::class, 'index'])->name('apprentice.index');
@@ -74,6 +81,7 @@ Route::post('/apprentice/store', [ApprenticeController::class, 'dato'])->name('a
 Route::get('apprentice/{apprentice}', [ApprenticeController::class, 'show'])->name('apprentice.show');
 Route::get('apprentice/{apprentice}/edit', [ApprenticeController::class, 'edit'])->name('apprentice.edit');
 Route::put('apprentice/{apprentice}', [ApprenticeController::class, 'update'])->name('apprentice.update');
+Route::delete('apprentice/{apprentice}', [AreaController::class, 'destroy'])->name('apprentice.destroy');
 
 //Home
 
@@ -84,4 +92,33 @@ Route::view('/about', 'about.create');
 Route::view('/login', 'login.create');
 //register
 Route::view('/register', 'register.create');
+//notification
+Route::view('/notifications', 'notification.index')->name('notifications.index');
+//oferta
+Route::view('/offers', 'offer.index')->name('offer.index');
 
+Route::view('/login', 'login.create')->name('login');
+
+// Procesar inicio de sesión simulado (Sin Base de Datos)
+Route::post('/login', function (Request $request) {
+    $role = $request->input('role', 'Aprendiz');
+    $name = ($role === 'Admin') ? 'Administrador SENA' : 'Yilmer Melenge';
+    $email = ($role === 'Admin') ? 'admin@sena.edu.co' : 'aprendiz@sena.edu.co';
+
+    // Guardar usuario simulado en la sesión
+    session([
+        'user' => [
+            'name' => $name,
+            'email' => $email,
+            'role' => $role
+        ]
+    ]);
+    //profile
+    return redirect()->route('carnet.index');
+})->name('login.post');
+
+// Cerrar sesión
+Route::post('/logout', function () {
+    session()->forget('user');
+    return redirect()->route('login');
+})->name('logout');

@@ -70,4 +70,9 @@ class TeacherController extends Controller
 
         return redirect()->route('teacher.index')->with('success', 'Profesor creado correctamente.');
     }
+    public function destroy(Teacher $teacher)
+    {
+        $teacher->delete();
+        return redirect()->route('teacher.index')->with('success', 'Profesor eliminado correctamente.');
+    }
 }

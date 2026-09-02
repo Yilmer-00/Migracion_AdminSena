@@ -55,4 +55,9 @@ public function update(Request $request, Area $area)
         // En lugar de retornar el objeto, redirigimos al index con un mensaje de éxito
         return redirect()->route('area.index')->with('success', 'Área creada correctamente.');
     }
+    public function destroy(Area $area)
+    {
+        $area->delete();
+        return redirect()->route('area.index')->with('success', 'Área eliminada correctamente.');
+    }
 }

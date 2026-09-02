@@ -61,4 +61,9 @@ class CourseController extends Controller
 
         return redirect()->back()->with('success', 'Curso registrado exitosamente');
     }
+    public function destroy(Course $course)
+    {
+        $course->delete();
+        return redirect()->route('course.index')->with('success', 'Curso eliminado correctamente.');
+    }
 }
