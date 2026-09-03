@@ -15,7 +15,7 @@
         </div>
 
         <!-- Formulario de Login -->
-        <form method="POST" action="{{url('/login')}}">
+        <form action="{{ route('login.post') }}" method="POST">
             @csrf
 
             <!-- Campo: Correo Electrónico -->
