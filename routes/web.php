@@ -17,6 +17,7 @@ use App\Http\Controllers\ApprenticeController;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\NotificationController;
 
 
 //categoory
@@ -90,10 +91,14 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('apprentice/{apprentice}', [ApprenticeController::class, 'update'])->name('apprentice.update');
     Route::delete('apprentice/{apprentice}', [AreaController::class, 'destroy'])->name('apprentice.destroy');
     Route::resource('/announcements', AnnouncementController::class);
-});
+    });
 
 Route::middleware(['auth', 'role:apprentice,admin'])->group(function () {
     Route::get('/course/list', [CourseController::class, 'index'])->name('course.index');
+
+
+    
+
 });
 
 //Home
@@ -108,7 +113,11 @@ Route::view('/login', 'login.create');
 //register
 Route::view('/register', 'register.create');
 //notification
-Route::view('/notifications', 'notification.index')->name('notifications.index');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::post('/notifications/mark-as-read', [NotificationController::class, 'markAllAsRead'])->name('notifications.markAsRead');
+    Route::delete('/notifications/{id}', [NotificationController::class, 'destroy'])->name('notifications.destroy');
+});
 //oferta
 Route::middleware(['auth', 'role:apprentice,admin'])->group(function () {
     Route::view('/offers', 'offer.index')->name('offer.index');

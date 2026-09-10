@@ -23,12 +23,33 @@ class CourseController extends Controller
 
     public function update(Request $request, Course $course)
     {
-        // Actualizamos los datos del curso omitiendo los campos de control de Laravel
-        $course->update($request->except(['_token', '_method']));
+        // 1. Validar campos
+        $request->validate([
+            'course_number'     => 'required',
+            'day'               => 'required',
+            'area_id'           => 'required|exists:areas,id',
+            'trainig_center_id' => 'required|exists:trainig_centers,id',
+            'image'             => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
+        ]);
 
-        // Redireccionamos al listado de cursos con un mensaje de éxito
+        $data = $request->except(['_token', '_method', 'image']);
+
+        // 2. Si se sube una nueva imagen, eliminar la anterior y guardar la nueva
+        if ($request->hasFile('image')) {
+            // Elimina la imagen previa si existe físicamente en el disco local storage
+            if ($course->image && Storage::disk('public')->exists($course->image)) {
+                Storage::disk('public')->delete($course->image);
+            }
+
+            // Guarda la nueva imagen
+            $data['image'] = $request->file('image')->store('courses', 'public');
+        }
+
+        $course->update($data);
+
         return redirect()->route('course.index')->with('success', 'Curso actualizado correctamente.');
     }
+
     public function show(Course $course)
     {
         return view('course.show', compact('course'));
@@ -50,20 +71,42 @@ class CourseController extends Controller
 
     public function dato(Request $request)
     {
+        // 1. Validar los datos de entrada, incluyendo la imagen
+        $request->validate([
+            'course_number'     => 'required',
+            'day'               => 'required',
+            'area_id'           => 'required|exists:areas,id',
+            'training_center_id' => 'required|exists:trainig_centers,id',
+            'image'             => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
+        ]);
 
         $course = new Course();
-
         $course->area_id = $request->input('area_id');
         $course->course_number = $request->input('course_number');
         $course->day = $request->input('day');
         $course->trainig_center_id = $request->input('training_center_id');
+
+        // 2. Procesar la imagen si fue cargada
+        if ($request->hasFile('image')) {
+            // Guarda el archivo en storage/app/public/courses y devuelve la ruta relativa
+            $path = $request->file('image')->store('courses', 'public');
+            $course->image = $path; // Guarda "courses/nombre_archivo.jpg" en BD
+        }
+
         $course->save();
 
-        return redirect()->back()->with('success', 'Curso registrado exitosamente');
+        return redirect()->route('course.index')->with('success', 'Curso registrado exitosamente.');
     }
     public function destroy(Course $course)
     {
+        // 1. Eliminar la imagen del almacenamiento físico antes de borrar el registro
+        if ($course->image && Storage::disk('public')->exists($course->image)) {
+            Storage::disk('public')->delete($course->image);
+        }
+
+        // 2. Eliminar el registro de la base de datos
         $course->delete();
+
         return redirect()->route('course.index')->with('success', 'Curso eliminado correctamente.');
     }
 }

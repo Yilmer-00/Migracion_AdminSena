@@ -70,6 +70,7 @@
                             <td class="text-secondary small">
                                 <i class="fas fa-building text-muted me-1"></i> {{ $course->trainig_center?->name }}
                             </td>
+                            
 
                             <!-- Botones de Acciones -->
                             <td class="pe-4 text-center">
