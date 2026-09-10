@@ -15,6 +15,9 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CourseTeacherController;
 use App\Http\Controllers\ApprenticeController;
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AnnouncementController;
+
 
 //categoory
 Route::get('category/create', [CategoryController::class, 'create'])->name('category.create');
@@ -86,6 +89,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('apprentice/{apprentice}/edit', [ApprenticeController::class, 'edit'])->name('apprentice.edit');
     Route::put('apprentice/{apprentice}', [ApprenticeController::class, 'update'])->name('apprentice.update');
     Route::delete('apprentice/{apprentice}', [AreaController::class, 'destroy'])->name('apprentice.destroy');
+    Route::resource('/announcements', AnnouncementController::class);
 });
 
 Route::middleware(['auth', 'role:apprentice,admin'])->group(function () {
@@ -93,8 +97,10 @@ Route::middleware(['auth', 'role:apprentice,admin'])->group(function () {
 });
 
 //Home
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::view('/home', 'home.create');
+
+
 //quienes somos
 Route::view('/about', 'about.create');
 //login

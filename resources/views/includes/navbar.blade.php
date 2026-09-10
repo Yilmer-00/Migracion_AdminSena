@@ -1,4 +1,3 @@
-
 <style>
     .navbar-nav .nav-link:hover {
         color: #ffffff !important;
@@ -55,57 +54,6 @@
 
                 @if (auth()->check() && auth()->user()->role === 'admin')
 
-                <li class="nav-item">
-                    <a class="nav-link active text-white"
-                        href="{{ route('area.create') }}">
-                        Área
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link active text-white"
-                        href="{{ route('apprentice.registro') }}">
-                        Aprendices
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link text-white-50"
-                        href="{{ route('trainig-center.create') }}">
-                        Centro de estudio
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link text-white-50"
-                        href="{{ route('computer.create') }}">
-                        Nuevo computador
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link text-white-50"
-                        href="{{ route('teacher.create') }}">
-                        Instructores
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link text-white-50"
-                        href="{{ route('course.registro') }}">
-                        Curso
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link text-white-50"
-                        href="{{ route('course_teacher.registro') }}">
-                        Asignar
-                    </a>
-                </li>
-
-
-                {{-- MENÚ ADMINISTRACIÓN --}}
                 <li class="nav-item dropdown">
 
                     <a class="nav-link dropdown-toggle text-white-50"
@@ -115,51 +63,139 @@
                         data-bs-toggle="dropdown"
                         aria-expanded="false">
 
-                        Administración
+                        Ingresar Datos
 
                     </a>
 
                     <ul class="dropdown-menu"
                         aria-labelledby="adminDropdown">
+                        <li class="nav-item">
+                            <a class="dropdown-item"
+                                href="{{ route('area.create') }}">
+                                Área
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="dropdown-item"
+                                href="{{ route('apprentice.registro') }}">
+                                Aprendices
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="dropdown-item"
+                                href="{{ route('trainig-center.create') }}">
+                                Centro de estudio
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="dropdown-item"
+                                href="{{ route('computer.create') }}">
+                                Nuevo computador
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="dropdown-item"
+                                href="{{ route('teacher.create') }}">
+                                Instructores
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="dropdown-item"
+                                href="{{ route('course.registro') }}">
+                                Curso
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="dropdown-item"
+                                href="{{ route('course_teacher.registro') }}">
+                                Asignar
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </li>
+                <li class="nav-item dropdown">
+
+                    <a class="nav-link dropdown-toggle text-white-50"
+                        href="#"
+                        id="adminDropdown"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false">
+
+                        Ajustes del sistema
+
+                    </a>
+
+                    <ul class="dropdown-menu"
+                        aria-labelledby="adminDropdown">
+                        
+
+                            <li>
+                                <a class="dropdown-item" href="{{ route('announcements.index') }}">
+                                    Gestión de Anuncios
+                                </a>
+                            </li>
+
+                    </ul>
+                
+                </li>
+
+
+
+                {{-- MENÚ ADMINISTRACIÓN --}}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white-50"
+                        href="#"
+                        id="adminDropdown"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Administración
+                    </a>
+
+                    <!-- AQUÍ ESTABA EL ERROR: Faltaba abrir el <ul class="dropdown-menu"> -->
+                    <ul class="dropdown-menu" aria-labelledby="adminDropdown">
 
                         <li>
-                            <a class="dropdown-item"
-                                href="{{ route('area.index') }}">
+                            <a class="dropdown-item" href="{{ route('area.index') }}">
                                 Gestión de Áreas
                             </a>
                         </li>
 
                         <li>
-                            <a class="dropdown-item"
-                                href="{{ route('computer.index') }}">
+                            <a class="dropdown-item" href="{{ route('computer.index') }}">
                                 Gestión de Computadores
                             </a>
                         </li>
 
                         <li>
-                            <a class="dropdown-item"
-                                href="{{ route('teacher.index') }}">
+                            <a class="dropdown-item" href="{{ route('teacher.index') }}">
                                 Gestión de Instructores
                             </a>
                         </li>
 
                         <li>
-                            <a class="dropdown-item"
-                                href="{{ route('course.index') }}">
+                            <a class="dropdown-item" href="{{ route('course.index') }}">
                                 Gestión de Cursos
                             </a>
                         </li>
 
                         <li>
-                            <a class="dropdown-item"
-                                href="{{ route('course_teacher.index') }}">
+                            <a class="dropdown-item" href="{{ route('course_teacher.index') }}">
                                 Instructores en Curso
                             </a>
                         </li>
 
                         <li>
-                            <a class="dropdown-item"
-                                href="{{ route('apprentice.index') }}">
+                            <a class="dropdown-item" href="{{ route('apprentice.index') }}">
                                 Gestión de Aprendices
                             </a>
                         </li>
@@ -169,21 +205,18 @@
                         </li>
 
                         <li>
-                            <a class="dropdown-item"
-                                href="{{ url('/about') }}">
+                            <a class="dropdown-item" href="{{ url('/about') }}">
                                 Quiénes Somos
                             </a>
                         </li>
 
                         <li>
-                            <a class="dropdown-item"
-                                href="{{ route('carnet.index') }}">
+                            <a class="dropdown-item" href="{{ route('carnet.index') }}">
                                 Perfil
                             </a>
                         </li>
 
                     </ul>
-
                 </li>
 
 
@@ -198,7 +231,7 @@
                     <a class="nav-link text-white"
                         href="{{ route('course.index') }}">
 
-                         Cursos
+                        Cursos
 
                     </a>
 
@@ -209,7 +242,7 @@
                     <a class="nav-link text-white"
                         href="{{ route('apprentice.index') }}">
 
-                         Aprendices
+                        Aprendices
 
                     </a>
 
@@ -220,7 +253,7 @@
                     <a class="nav-link text-white"
                         href="{{ route('carnet.index') }}">
 
-                         Mi Carnet
+                        Mi Carnet
 
                     </a>
 
@@ -238,7 +271,7 @@
                     <a class="nav-link text-white"
                         href="{{ route('carnet.index') }}">
 
-                         Mi Carnet
+                        Mi Carnet
 
                     </a>
 
@@ -249,7 +282,7 @@
                     <a class="nav-link text-white"
                         href="{{ route('course.index') }}">
 
-                         Mis Cursos
+                        Mis Cursos
 
                     </a>
 
@@ -299,7 +332,7 @@
             <a href="{{ route('login') }}"
                 class="btn btn-outline-light fw-bold rounded-pill px-3 shadow-sm">
 
-                 Iniciar Sesión
+                Iniciar Sesión
 
             </a>
 
@@ -325,7 +358,7 @@
                     <span class="badge bg-danger text-white rounded-pill px-2 py-1"
                         style="font-size: 10px;">
 
-                         ADMIN
+                        ADMIN
 
                     </span>
 
@@ -334,7 +367,7 @@
                     <span class="badge bg-primary text-white rounded-pill px-2 py-1"
                         style="font-size: 10px;">
 
-                         INSTRUCTOR
+                        INSTRUCTOR
 
                     </span>
 
@@ -343,7 +376,7 @@
                     <span class="badge bg-success text-white rounded-pill px-2 py-1"
                         style="font-size: 10px;">
 
-                         APRENDIZ
+                        APRENDIZ
 
                     </span>
 
@@ -394,7 +427,7 @@
                         <a class="dropdown-item py-2 d-flex align-items-center gap-2"
                             href="{{ route('carnet.index') }}">
 
-                             Mi Perfil / Carnet
+                            Mi Perfil / Carnet
 
                         </a>
 
@@ -421,7 +454,7 @@
                             <button type="submit"
                                 class="dropdown-item text-danger fw-semibold py-2 d-flex align-items-center gap-2">
 
-                                 Cerrar Sesión
+                                Cerrar Sesión
 
                             </button>
 
