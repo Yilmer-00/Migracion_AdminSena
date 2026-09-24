@@ -123,8 +123,9 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/notifications/{id}', [NotificationController::class, 'destroy'])->name('notifications.destroy');
 });
 //oferta
+// Reemplaza Route::view por la llamada al controlador
 Route::middleware(['auth', 'role:apprentice,admin'])->group(function () {
-    Route::view('/offers', 'offer.index')->name('offer.index');
+    Route::get('/offers', [FormacionController::class, 'index'])->name('offer.index');
 });
 
 // 1. Ruta para MOSTRAR la vista del formulario (GET)

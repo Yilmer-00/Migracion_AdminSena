@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Formacion;
 use Illuminate\Http\Request;
+use App\Models\Area;
+use App\Models\Trainig_center;
+
 
 class FormacionController extends Controller
 {
@@ -45,5 +48,13 @@ class FormacionController extends Controller
         }, 'trainingCenter', 'area'])->findOrFail($id);
 
         return view('admin.evaluar-aspirantes', compact('formacion'));
+    }
+
+    public function create()
+    {
+        $areas = Area::all();
+        $trainig_centers = Trainig_center::all();
+
+        return view('admin.formaciones.create', compact('areas', 'trainig_centers'));
     }
 }
