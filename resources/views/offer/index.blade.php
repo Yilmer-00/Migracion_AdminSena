@@ -10,7 +10,7 @@
             <small class="text-muted">Monitoreo de demanda, aspirantes y estado de selección en tiempo real.</small>
         </div>
         <a href="{{ route('area.create') }}" class="btn btn-success btn-sm shadow-sm" style="background-color: #39A900; border: none;">
-            ➕ Registrar Nueva Área
+            ➕ Registrar Nueva Oferta
         </a>
     </div>
 
@@ -41,12 +41,33 @@
                                 <small class="text-muted fw-semibold">✍️ Inscritos</small>
                             </div>
                         </div>
+                        @foreach($formaciones as $formacion)
+
                         <div class="col-4">
-                            <div class="p-2 bg-light rounded-3 border">
-                                <span class="d-block fs-4 fw-bold text-warning">18</span>
-                                <small class="text-muted fw-semibold">⏳ Por Evaluar</small>
+
+                            <div class="p-2 bg-light rounded-3 border text-center">
+
+                                <span class="d-block fs-4 fw-bold text-warning">
+                                    {{ $formacion->total_por_evaluar ?? 0 }}
+                                </span>
+
+                                <small class="text-muted fw-semibold">
+                                    🏆 Por Evaluar
+                                </small>
+
+                                <a
+                                    href="{{ route('formaciones.evaluar', $formacion->id) }}"
+                                    class="btn btn-warning mt-2">
+                                    Evaluar Aspirantes
+                                    ({{ $formacion->total_por_evaluar ?? 0 }})
+                                </a>
+
                             </div>
+
                         </div>
+
+                        @endforeach
+
                     </div>
 
                     <!-- Barra de Progreso de Cupos -->

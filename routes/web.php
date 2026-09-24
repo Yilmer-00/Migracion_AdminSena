@@ -5,6 +5,7 @@ use App\Http\Controllers\OperacionesController;
 use App\Http\Controllers\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\FormacionController;
 
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\TrainigCenterController;
@@ -26,7 +27,7 @@ Route::post('category/store', [CategoryController::class, 'store'])->name('categ
 
 
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
+Route::middleware(['auth', 'role:admin,instructor'])->group(function () {
     //Areas
     Route::get('/areas/list', [AreaController::class, 'index'])->name('area.index');
     Route::get('/area/create', [AreaController::class, 'create'])->name('area.create');
@@ -93,16 +94,19 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('/announcements', AnnouncementController::class);
     });
 
-Route::middleware(['auth', 'role:apprentice,admin'])->group(function () {
-    Route::get('/course/list', [CourseController::class, 'index'])->name('course.index');
+// Route::middleware(['auth', 'role:apprentice,admin'])->group(function () {
+//     Route::get('/course/list', [CourseController::class, 'index'])->name('course.index');
 
 
     
 
-});
+// });
 
 //Home
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+//formacion
+Route::resource('formaciones', FormacionController::class);
+Route::get('formaciones/{id}/evaluar', [FormacionController::class, 'evaluarAspirantes'])->name('formaciones.evaluar');
 
 
 

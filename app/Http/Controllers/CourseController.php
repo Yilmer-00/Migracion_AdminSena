@@ -35,15 +35,7 @@ class CourseController extends Controller
         $data = $request->except(['_token', '_method', 'image']);
 
         // 2. Si se sube una nueva imagen, eliminar la anterior y guardar la nueva
-        if ($request->hasFile('image')) {
-            // Elimina la imagen previa si existe físicamente en el disco local storage
-            if ($course->image && Storage::disk('public')->exists($course->image)) {
-                Storage::disk('public')->delete($course->image);
-            }
 
-            // Guarda la nueva imagen
-            $data['image'] = $request->file('image')->store('courses', 'public');
-        }
 
         $course->update($data);
 
@@ -100,9 +92,7 @@ class CourseController extends Controller
     public function destroy(Course $course)
     {
         // 1. Eliminar la imagen del almacenamiento físico antes de borrar el registro
-        if ($course->image && Storage::disk('public')->exists($course->image)) {
-            Storage::disk('public')->delete($course->image);
-        }
+
 
         // 2. Eliminar el registro de la base de datos
         $course->delete();
