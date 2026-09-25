@@ -36,7 +36,7 @@
                     <select class="form-select" id="area_id" name="area_id" required>
                         <option value="">Seleccione un área...</option>
                         @foreach($areas as $area)
-                        <option value="{{ $area->id }}">{{ $area->nombre }}</option>
+                        <option value="{{ $area->id }}">{{ $area->name }}</option> {{-- Cambiado a ->name --}}
                         @endforeach
                     </select>
                 </div>
@@ -46,7 +46,7 @@
                     <select class="form-select" id="training_center_id" name="training_center_id" required>
                         <option value="">Seleccione un centro...</option>
                         @foreach($trainingCenters as $center)
-                        <option value="{{ $center->id }}">{{ $center->nombre }}</option>
+                        <option value="{{ $center->id }}">{{ $center->name }}</option> {{-- Cambiado a ->name --}}
                         @endforeach
                     </select>
                 </div>

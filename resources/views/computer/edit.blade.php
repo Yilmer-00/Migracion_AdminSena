@@ -5,7 +5,7 @@
 
     <!-- Botones de Navegación Rápida -->
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <a href="{{ url('/computer/list') }}" class="btn btn-secondary btn-sm shadow-sm">
+        <a href="{{ route('computer.index') }}" class="btn btn-secondary btn-sm shadow-sm">
             ← Volver al Listado
         </a>
         <span class="text-muted fw-bold">Módulo de Inventario PC</span>
@@ -31,8 +31,8 @@
         </div>
 
         <div class="card-body p-4 bg-light">
-            <!-- La acción apunta a .update pasando el ID del computador -->
-            <form action="{{ route('computer.update', $computer->id) }}" method="POST">
+            <!-- 1. IMPORTANTE: Se agregó enctype="multipart/form-data" -->
+            <form action="{{ route('computer.update', $computer->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT') <!-- Requerido para procesar la actualización en Laravel -->
 
@@ -54,7 +54,7 @@
                 </div>
 
                 <!-- Marca (Brand) -->
-                <div class="mb-4">
+                <div class="mb-3">
                     <label class="form-label fw-bold text-muted">Marca (Brand):</label>
                     <input type="text"
                         name="brand"
@@ -63,6 +63,32 @@
                         placeholder="Ej. HP, Lenovo, Dell"
                         required>
                     @error('brand')
+                    <div class="invalid-feedback fw-bold">⚠️ {{ $message }}</div>
+                    @enderror
+                </div>
+
+                <!-- 2. NUEVA SECCIÓN: Imagen actual y campo para cambiarla -->
+                <div class="mb-4">
+                    <label class="form-label fw-bold text-muted">Fotografía del Computador:</label>
+
+                    @if($computer->urlFoto)
+                    <div class="mb-2">
+                        <span class="d-block small text-muted fst-italic">Imagen actual guardada:</span>
+                        <img src="{{ asset('storage/' . $computer->urlFoto) }}" alt="Foto actual" width="100" class="img-thumbnail rounded shadow-sm mt-1">
+                    </div>
+                    @else
+                    <div class="mb-2">
+                        <span class="badge bg-secondary">Este equipo no tiene foto asignada</span>
+                    </div>
+                    @endif
+
+                    <input type="file"
+                        name="urlFoto"
+                        class="form-control shadow-sm @error('urlFoto') is-invalid @enderror"
+                        accept="image/*">
+                    <small class="text-muted d-mt-1">Deja este campo en blanco si deseas conservar la imagen actual.</small>
+
+                    @error('urlFoto')
                     <div class="invalid-feedback fw-bold">⚠️ {{ $message }}</div>
                     @enderror
                 </div>

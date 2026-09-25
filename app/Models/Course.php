@@ -43,4 +43,8 @@ class Course extends Model
         // Si tu columna pivot se llama curse_id con 'u', se lo especificamos aquí:
         return $this->belongsToMany('App\Models\Teacher', 'course_teacher', 'curse_id', 'teacher_id');
     }
+    public function formacion()
+    {
+        return $this->belongsTo(Formacion::class, 'formacion_id');
+    }
 }

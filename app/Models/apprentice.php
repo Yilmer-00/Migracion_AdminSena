@@ -18,7 +18,8 @@ class apprentice extends Model
         'email',
         'cell_number',
         'course_id',
-        'computer_id'
+        'computer_id',
+        'estado',
     ];
 
     // Asegúrate de que la de computadora también sea belongsTo si un aprendiz tiene un solo PC

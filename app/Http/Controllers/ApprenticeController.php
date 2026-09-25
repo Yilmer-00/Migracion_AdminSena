@@ -70,4 +70,32 @@ class ApprenticeController extends Controller
 
         return redirect()->back()->with('success', 'Aprendiz registrado con éxito.');
     }
+
+    public function createPostulacion()
+    {
+        // Cargamos los cursos con su respectiva formación para mostrarlos en el select
+        $courses = Course::with('formacion')->get();
+        return view('aspirante.postular', compact('courses'));
+    }
+
+    // Guarda los datos del aspirante en la base de datos
+    public function storePostulacion(Request $request)
+    {
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'email' => 'required|email|unique:apprentices,email',
+            'course_id' => 'required|exists:courses,id',
+        ]);
+
+        Apprentice::create([
+            'name' => $request->nombre,
+            'email' => $request->email,
+            'cell_number' => 'N/A',
+            'computer_id' => null, // <-- Añadido para evitar el error de campo obligatorio
+            'course_id' => $request->course_id,
+            'estado' => 'por_evaluar',
+        ]);
+
+        return redirect()->route('postulacion.create')->with('success', '¡Te has postulado con éxito! Tu solicitud ha quedado pendiente de evaluación.');
+    }
 }

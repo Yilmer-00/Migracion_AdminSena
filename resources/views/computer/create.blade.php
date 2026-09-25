@@ -5,8 +5,8 @@
 
     <!-- Botones de Navegación Rápida -->
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <a href="{{ url('/home')  }}" class="btn btn-secondary btn-sm shadow-sm">
-            ← Volver al inicio
+        <a href="{{ route('computer.index') }}" class="btn btn-secondary btn-sm shadow-sm">
+            ← Volver al Listado
         </a>
         <span class="text-muted fw-bold">Módulo de Inventario</span>
     </div>
@@ -27,7 +27,8 @@
         </div>
 
         <div class="card-body p-4 bg-light">
-            <form action="{{ route('computer.store') }}" method="POST">
+            <!-- 1. IMPORTANTE: Se agregó enctype="multipart/form-data" -->
+            <form action="{{ route('computer.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <!-- Sección: Especificaciones del Equipo -->
@@ -65,6 +66,21 @@
                         </div>
                         @enderror
                     </div>
+                </div>
+
+                <!-- 2. NUEVA SECCIÓN: Campo para subir la fotografía -->
+                <div class="mb-4">
+                    <label class="form-label fw-bold text-muted">Fotografía del Computador:</label>
+                    <input type="file"
+                        name="urlFoto"
+                        class="form-control shadow-sm @error('urlFoto') is-invalid @enderror"
+                        accept="image/*">
+                    <small class="text-muted d-block mt-1">Formatos permitidos: JPEG, PNG, JPG, GIF (Máx. 2MB)</small>
+                    @error('urlFoto')
+                    <div class="invalid-feedback fw-bold">
+                        ⚠️ {{ $message }}
+                    </div>
+                    @enderror
                 </div>
 
                 <!-- Botón de Registro -->

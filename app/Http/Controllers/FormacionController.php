@@ -6,6 +6,7 @@ use App\Models\Formacion;
 use Illuminate\Http\Request;
 use App\Models\Area;
 use App\Models\Trainig_center;
+use app\Models\Apprentice;
 
 
 class FormacionController extends Controller
@@ -53,8 +54,24 @@ class FormacionController extends Controller
     public function create()
     {
         $areas = Area::all();
-        $trainig_centers = Trainig_center::all();
+        $trainingCenters = Trainig_center::all();
 
-        return view('admin.formaciones.create', compact('areas', 'trainig_centers'));
+        return view('admin.formaciones.create', compact('areas', 'trainingCenters'));
+    }
+
+    public function aprobarAspirante($id)
+    {
+        $aspirante = Apprentice::findOrFail($id);
+        $aspirante->update(['estado' => 'inscrito']);
+
+        return redirect()->back()->with('success', '¡Aspirante aprobado con éxito!');
+    }
+
+    public function rechazarAspirante($id)
+    {
+        $aspirante = Apprentice::findOrFail($id);
+        $aspirante->update(['estado' => 'rechazado']);
+
+        return redirect()->back()->with('success', 'Aspirante rechazado correctamente.');
     }
 }

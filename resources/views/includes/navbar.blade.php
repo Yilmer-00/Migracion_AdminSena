@@ -136,16 +136,16 @@
 
                     <ul class="dropdown-menu"
                         aria-labelledby="adminDropdown">
-                        
 
-                            <li>
-                                <a class="dropdown-item" href="{{ route('announcements.index') }}">
-                                    Gestión de Anuncios
-                                </a>
-                            </li>
+
+                        <li>
+                            <a class="dropdown-item" href="{{ route('announcements.index') }}">
+                                Gestión de Anuncios
+                            </a>
+                        </li>
 
                     </ul>
-                
+
                 </li>
 
 
@@ -283,6 +283,16 @@
                         href="{{ route('course.index') }}">
 
                         Mis Cursos
+
+                    </a>
+
+                </li>
+                <li class="nav-item">
+
+                    <a class="nav-link text-white"
+                        href="{{ route('postulacion.create') }}">
+
+                        Postulación
 
                     </a>
 

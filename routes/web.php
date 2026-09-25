@@ -92,13 +92,15 @@ Route::middleware(['auth', 'role:admin,instructor'])->group(function () {
     Route::put('apprentice/{apprentice}', [ApprenticeController::class, 'update'])->name('apprentice.update');
     Route::delete('apprentice/{apprentice}', [AreaController::class, 'destroy'])->name('apprentice.destroy');
     Route::resource('/announcements', AnnouncementController::class);
-    });
+    Route::post('aspirante/{id}/aprobar', [FormacionController::class, 'aprobarAspirante'])->name('aspirante.aprobar');
+    Route::post('aspirante/{id}/rechazar', [FormacionController::class, 'rechazarAspirante'])->name('aspirante.rechazar');
+});
 
 // Route::middleware(['auth', 'role:apprentice,admin'])->group(function () {
 //     Route::get('/course/list', [CourseController::class, 'index'])->name('course.index');
 
 
-    
+
 
 // });
 
@@ -197,3 +199,9 @@ Route::post('/logout', function (Request $request) {
 
     return redirect()->route('login');
 })->name('logout');
+
+
+
+// Rutas para la postulación de aspirantes
+Route::get('/postulacion', [ApprenticeController::class, 'createPostulacion'])->name('postulacion.create');
+Route::post('/postulacion', [ApprenticeController::class, 'storePostulacion'])->name('postulacion.store');
