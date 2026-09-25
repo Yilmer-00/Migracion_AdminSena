@@ -4,24 +4,29 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Computer;
-use Illuminate\Support\Facades\Storage; // Importante para manejar archivos
+use Illuminate\Support\Facades\Storage;
 
 class ComputerController extends Controller
 {
+    /**
+     * Mostrar una lista de todos los computadores.
+     */
     public function index()
     {
         $computers = Computer::all();
-        return view('computer.index', compact('computers'));
+
+        return response()->json([
+            'success' => true,
+            'data' => $computers
+        ], 200);
     }
 
-    public function create()
-    {
-        return view('computer.create');
-    }
-
+    /**
+     * Almacenar un nuevo computador (incluyendo la subida de imagen).
+     */
     public function store(Request $request)
     {
-        // 1. Validar los datos y la imagen (opcional pero recomendado)
+        // 1. Validar los datos y la imagen
         $request->validate([
             'number' => 'required',
             'brand' => 'required',
@@ -47,20 +52,28 @@ class ComputerController extends Controller
 
         $computer->save();
 
-        // 4. Redireccionar al index con mensaje de éxito (cambiamos el return $computer por una redirección)
-        return redirect()->route('computer.index')->with('success', 'Computador creado correctamente.');
+        // 4. Retornar respuesta JSON con el registro creado
+        return response()->json([
+            'success' => true,
+            'message' => 'Computador creado correctamente.',
+            'data' => $computer
+        ], 201);
     }
 
+    /**
+     * Mostrar los detalles de un computador específico.
+     */
     public function show(Computer $computer)
     {
-        return view('computer.show', compact('computer'));
+        return response()->json([
+            'success' => true,
+            'data' => $computer
+        ], 200);
     }
 
-    public function edit(Computer $computer)
-    {
-        return view('computer.edit', compact('computer'));
-    }
-
+    /**
+     * Actualizar un computador existente (incluyendo reemplazo o eliminación de imagen).
+     */
     public function update(Request $request, Computer $computer)
     {
         // Validar datos
@@ -70,12 +83,12 @@ class ComputerController extends Controller
             'urlFoto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Obtener todos los datos excepto el token, el método y la foto temporal
+        // Obtener datos excepto tokens o métodos de formulario
         $data = $request->except(['_token', '_method', 'urlFoto']);
 
         // Si el usuario subió una nueva foto
         if ($request->hasFile('urlFoto')) {
-            // Eliminar la foto anterior si existe físicamente para no saturar el disco
+            // Eliminar la foto anterior si existe físicamente
             if ($computer->urlFoto && Storage::exists('public/' . $computer->urlFoto)) {
                 Storage::delete('public/' . $computer->urlFoto);
             }
@@ -92,18 +105,28 @@ class ComputerController extends Controller
         // Actualizamos los datos del equipo
         $computer->update($data);
 
-        return redirect()->route('computer.index')->with('success', 'Computador actualizado correctamente.');
+        return response()->json([
+            'success' => true,
+            'message' => 'Computador actualizado correctamente.',
+            'data' => $computer
+        ], 200);
     }
 
+    /**
+     * Eliminar un computador y su respectiva foto del almacenamiento.
+     */
     public function destroy(Computer $computer)
     {
-        // Opcional: Borrar la imagen de storage cuando se borre el computador
+        // Borrar la imagen de storage cuando se borre el computador
         if ($computer->urlFoto && Storage::exists('public/' . $computer->urlFoto)) {
             Storage::delete('public/' . $computer->urlFoto);
         }
 
         $computer->delete();
 
-        return redirect()->route('computer.index')->with('success', 'Computador eliminado correctamente.');
+        return response()->json([
+            'success' => true,
+            'message' => 'Computador eliminado correctamente.'
+        ], 200);
     }
 }

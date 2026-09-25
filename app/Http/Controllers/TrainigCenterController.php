@@ -7,45 +7,79 @@ use App\Models\Trainig_center;
 
 class TrainigCenterController extends Controller
 {
-    public function edit($id)
-    {
-        // Buscamos el centro de formación por su ID
-        $trainigCenter = Trainig_Center::findOrFail($id);
-
-        // Retornamos la vista pasando el objeto del centro de formación
-        return view('trainig_center.edit', compact('trainigCenter'));
-    }
-
-    public function update(Request $request, $id)
-    {
-        $trainigCenter = Trainig_center::findOrFail($id);
-
-        $trainigCenter->update($request->except(['_token', '_method']));
-
-        return redirect()->route('trainig-center.index')->with('success', 'Centro de formación actualizado correctamente.');
-    }
-    public function show(Trainig_Center $trainigCenter)
-    {
-        return view('trainig_center.show', compact('trainigCenter'));
-    }
+    /**
+     * Mostrar una lista de todos los centros de formación.
+     */
     public function index()
     {
-        $trainigCenters = Trainig_Center::all();
+        $trainigCenters = Trainig_center::all();
 
-        return view('trainig_center.index', compact('trainigCenters'));
+        return response()->json([
+            'success' => true,
+            'data' => $trainigCenters
+        ], 200);
     }
 
-    public function create()
-    {
-        return view('trainig_center.create');
-    }
+    /**
+     * Almacenar un nuevo centro de formación.
+     */
     public function store(Request $request)
     {
-        $trainigCenter = new Trainig_center();
-        $trainigCenter->name = $request->name;
-        $trainigCenter->location = $request->location;
-        $trainigCenter->save();
+        // Es recomendable validar los datos que llegan de la API
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'location' => 'required|string|max:255',
+        ]);
 
-        return $trainigCenter;
+        $trainigCenter = Trainig_center::create($request->only(['name', 'location']));
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Centro de formación creado correctamente.',
+            'data' => $trainigCenter
+        ], 201); // 201 Created
+    }
+
+    /**
+     * Mostrar los detalles de un centro de formación específico.
+     */
+    public function show(Trainig_center $trainigCenter)
+    {
+        return response()->json([
+            'success' => true,
+            'data' => $trainigCenter
+        ], 200);
+    }
+
+    /**
+     * Actualizar un centro de formación existente.
+     */
+    public function update(Request $request, Trainig_center $trainigCenter)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'location' => 'required|string|max:255',
+        ]);
+
+        $trainigCenter->update($request->only(['name', 'location']));
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Centro de formación actualizado correctamente.',
+            'data' => $trainigCenter
+        ], 200);
+    }
+
+    /**
+     * Eliminar un centro de formación.
+     */
+    public function destroy(Trainig_center $trainigCenter)
+    {
+        $trainigCenter->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Centro de formación eliminado correctamente.'
+        ], 200);
     }
 }

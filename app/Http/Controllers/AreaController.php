@@ -4,60 +4,82 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Area;
-use App\Models\Trainig_center;
 
 class AreaController extends Controller
 {
-    public function edit(Area $area)
-    {
-        return view('area.edit', compact('area'));
-    }
-
-public function update(Request $request, Area $area)
-{
-    // Actualizamos omitiendo el _token y el _method
-    $area->update($request->except(['_token', '_method']));
-
-    return redirect()->route('area.index')->with('success', 'Área actualizada correctamente.');
-}
-    public function show(Area $area)
-    {
-        return view('area.show', compact('area'));
-    }
+    /**
+     * Mostrar una lista de todas las áreas.
+     */
     public function index()
     {
-        $areas = Area::all(); // Trae todas las áreas de la base de datos
-        return view('area.index', compact('areas'));
+        $areas = Area::all();
+
+        return response()->json([
+            'success' => true,
+            'data' => $areas
+        ], 200);
     }
 
-    public function create()
-    {
-        // Traemos solo las columnas que el formulario necesita (id y name) para ahorrar memoria
-        $areas = Area::select('id', 'name')->orderBy('name', 'asc')->get();
-
-        // Traemos los centros de formación ordenados alfabéticamente
-        $trainig_centers = Trainig_center::select('id', 'name')->orderBy('name', 'asc')->get();
-
-        return view('area.create');
-    }
-
+    /**
+     * Almacenar una nueva área creada.
+     */
     public function store(Request $request)
     {
-        // Es buena práctica validar que el nombre sea obligatorio
+        // Validamos que el nombre sea obligatorio
         $request->validate([
             'name' => 'required|string|max:255',
         ]);
 
-        $area = new Area();
-        $area->name = $request->input('name');
-        $area->save();
+        // Creamos el área
+        $area = Area::create($request->only('name'));
 
-        // En lugar de retornar el objeto, redirigimos al index con un mensaje de éxito
-        return redirect()->route('area.index')->with('success', 'Área creada correctamente.');
+        return response()->json([
+            'success' => true,
+            'message' => 'Área creada correctamente.',
+            'data' => $area
+        ], 201); // 201 Created
     }
+
+    /**
+     * Mostrar los detalles de un área específica.
+     */
+    public function show(Area $area)
+    {
+        return response()->json([
+            'success' => true,
+            'data' => $area
+        ], 200);
+    }
+
+    /**
+     * Actualizar un área existente.
+     */
+    public function update(Request $request, Area $area)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        // Actualizamos los datos
+        $area->update($request->only('name'));
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Área actualizada correctamente.',
+            'data' => $area
+        ], 200);
+    }
+
+    /**
+     * Eliminar un área.
+     */
     public function destroy(Area $area)
     {
         $area->delete();
-        return redirect()->route('area.index')->with('success', 'Área eliminada correctamente.');
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Área eliminada correctamente.'
+        ], 200);
     }
 }
