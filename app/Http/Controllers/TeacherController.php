@@ -3,76 +3,105 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\teacher;
+use App\Models\Teacher; // Asegúrate de usar la inicial en mayúscula por convención de Laravel
 use App\Models\Area;
 use App\Models\Trainig_Center;
 
 class TeacherController extends Controller
 {
-    public function edit(Teacher $teacher)
-    {
-        // Traemos las áreas y centros para llenar los select del formulario
-        $areas = Area::all();
-        $trainingCenters = Trainig_Center::all(); // Usamos tu modelo TrainigCenter
-
-        // Retornamos la vista con el profesor y las colecciones correspondientes
-        return view('teacher.edit', compact('teacher', 'areas', 'trainingCenters'));
-    }
-
-    public function update(Request $request, Teacher $teacher)
-    {
-        // Actualizamos al profesor omitiendo los campos de control de Laravel
-        $teacher->update($request->except(['_token', '_method']));
-
-        // Redireccionamos al index con el mensaje de éxito
-        return redirect()->route('teacher.index')->with('success', 'Profesor actualizado correctamente.');
-    }
-    public function show(Teacher $teacher)
-    {
-        $teacher->load(['area', 'trainig_center']);
-
-        return view('teacher.show', compact('teacher'));
-    }
+    /**
+     * Mostrar una lista de todos los profesores con sus relaciones.
+     */
     public function index()
     {
-        // Cargamos los profesores junto con su área y centro de formación de un solo golpe
+        // Cargamos los profesores junto con su área y centro de formación relacionados
         $teachers = Teacher::with(['area', 'trainig_center'])->get();
 
-        return view('teacher.index', compact('teachers'));
-    }
-    public function create()
-    {
-        $areas = Area::select('id', 'name')->orderBy('name', 'asc')->get();
-
-        // Aquí la llamamos $training_centers (con la "i" correcta para que coincida con tu vista)
-        $trainig_centers = Trainig_center::select('id', 'name')->orderBy('name', 'asc')->get();
-
-        return view('teacher.create', compact('areas', 'trainig_centers'));
+        return response()->json([
+            'success' => true,
+            'data' => $teachers
+        ], 200);
     }
 
+    /**
+     * Almacenar un nuevo profesor.
+     */
     public function store(Request $request)
     {
-        // 1. (Opcional pero muy recomendado) Valida que los datos lleguen obligatoriamente
+        // Validamos los datos y que las llaves foráneas realmente existan en la BD
         $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|email',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:teachers,email',
             'area_id' => 'required|exists:areas,id',
-            'trainig_center_id' => 'required|exists:trainig_centers,id', // Valida que exista el ID del centro
+            'trainig_center_id' => 'required|exists:trainig_centers,id',
         ]);
 
-        // 2. Opción si creas el objeto manualmente:
         $teacher = new Teacher();
         $teacher->name = $request->name;
         $teacher->email = $request->email;
         $teacher->area_id = $request->area_id;
-        $teacher->trainig_center_id = $request->trainig_center_id; // <-- Asegúrate de que esta línea exista y esté bien escrita
+        $teacher->trainig_center_id = $request->trainig_center_id;
         $teacher->save();
 
-        return redirect()->route('teacher.index')->with('success', 'Profesor creado correctamente.');
+        // Cargamos las relaciones para que el JSON devuelva los objetos completos del área y centro
+        $teacher->load(['area', 'trainig_center']);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Profesor creado correctamente.',
+            'data' => $teacher
+        ], 201); // 201 Created
     }
+
+    /**
+     * Mostrar los detalles de un profesor específico.
+     */
+    public function show(Teacher $teacher)
+    {
+        // Cargamos las relaciones antes de retornar
+        $teacher->load(['area', 'trainig_center']);
+
+        return response()->json([
+            'success' => true,
+            'data' => $teacher
+        ], 200);
+    }
+
+    /**
+     * Actualizar un profesor existente.
+     */
+    public function update(Request $request, Teacher $teacher)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'area_id' => 'required|exists:areas,id',
+            'trainig_center_id' => 'required|exists:trainig_centers,id',
+        ]);
+
+        // Actualizamos los campos necesarios
+        $teacher->update($request->only(['name', 'email', 'area_id', 'trainig_center_id']));
+
+        // Recargamos las relaciones para la respuesta
+        $teacher->load(['area', 'trainig_center']);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Profesor actualizado correctamente.',
+            _('data') => $teacher
+        ], 200);
+    }
+
+    /**
+     * Eliminar un profesor.
+     */
     public function destroy(Teacher $teacher)
     {
         $teacher->delete();
-        return redirect()->route('teacher.index')->with('success', 'Profesor eliminado correctamente.');
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Profesor eliminado correctamente.'
+        ], 200);
     }
 }
