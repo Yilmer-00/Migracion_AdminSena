@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use app\Models\Trainig_center;
 use App\Models\Area;
 
 class AreaController extends Controller
@@ -20,9 +21,24 @@ class AreaController extends Controller
         ], 200);
     }
 
-    /**
-     * Almacenar una nueva área creada.
-     */
+    public function create()
+    {
+        // Traemos las áreas y los centros de formación ordenados alfabéticamente
+        $areas = Area::select('id', 'name')->orderBy('name', 'asc')->get();
+        $trainig_centers = Trainig_center::select('id', 'name')->orderBy('name', 'asc')->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'areas' => $areas,
+                'trainig_centers' => $trainig_centers
+            ]
+        ], 200);
+    }
+
+
+    //Almacenar una nueva área creada.
+
     public function store(Request $request)
     {
         // Validamos que el nombre sea obligatorio
