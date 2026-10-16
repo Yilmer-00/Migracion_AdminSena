@@ -40,7 +40,7 @@ class FormacionController extends Controller
             'descripcion' => 'nullable|string',
             'estado' => 'required|in:abierta,cerrada,proxima',
             'area_id' => 'required|exists:areas,id',
-            'training_center_id' => 'required|exists:trainig_centers,id',
+            'trainig_center_id' => 'required|exists:trainig_centers,id',
         ]);
 
         $formacion = Formacion::create($request->all());

@@ -29,7 +29,7 @@ class Formacion extends Model
     // Una formación pertenece a un Centro de Formación
     public function trainingCenter()
     {
-        return $this->belongsTo(Trainig_center::class, 'training_center_id');
+        return $this->belongsTo(Trainig_center::class, 'trainig_center_id');
     }
 
     // Una formación tiene muchos Cursos o Fichas

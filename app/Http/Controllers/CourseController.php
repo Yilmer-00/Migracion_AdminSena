@@ -58,21 +58,6 @@ class CourseController extends Controller
         $course->day = $request->input('day');
         $course->area_id = $request->input('area_id');
         $course->trainig_center_id = $request->input('training_center_id');
-
-        // Procesar la imagen si fue cargada
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('courses', 'public');
-            $course->image = $path;
-        }
-
-        $course->save();
-        $course->load(['area', 'trainig_center']);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Curso registrado exitosamente.',
-            'data' => $course
-        ], 201);
     }
 
     /**
@@ -98,34 +83,7 @@ class CourseController extends Controller
             'day'                => 'required',
             'area_id'            => 'required|exists:areas,id',
             'training_center_id' => 'required|exists:trainig_centers,id',
-            'image'              => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
         ]);
-
-        $data = $request->except(['_token', '_method', 'image']);
-
-        // Mapear training_center_id a la columna real trainig_center_id de la base de datos si viene en la petición
-        if ($request->has('training_center_id')) {
-            $data['trainig_center_id'] = $request->input('training_center_id');
-        }
-
-        // Si se sube una nueva imagen, eliminar la anterior del disco y guardar la nueva
-        if ($request->hasFile('image')) {
-            if ($course->image && Storage::exists('public/' . $course->image)) {
-                Storage::delete('public/' . $course->image);
-            }
-
-            $path = $request->file('image')->store('courses', 'public');
-            $data['image'] = $path;
-        }
-
-        $course->update($data);
-        $course->load(['area', 'trainig_center']);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Curso actualizado correctamente.',
-            'data' => $course
-        ], 200);
     }
 
     /**
