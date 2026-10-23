@@ -7,9 +7,8 @@ use App\Models\Trainig_center;
 
 class TrainigCenterController extends Controller
 {
-    /**
-     * Mostrar una lista de todos los centros de formación.
-     */
+    
+    
     public function index()
     {
         $trainigCenters = Trainig_center::all();
@@ -20,12 +19,9 @@ class TrainigCenterController extends Controller
         ], 200);
     }
 
-    /**
-     * Almacenar un nuevo centro de formación.
-     */
+
     public function store(Request $request)
     {
-        // Es recomendable validar los datos que llegan de la API
         $request->validate([
             'name' => 'required|string|max:255',
             'location' => 'required|string|max:255',
@@ -37,12 +33,10 @@ class TrainigCenterController extends Controller
             'success' => true,
             'message' => 'Centro de formación creado correctamente.',
             'data' => $trainigCenter
-        ], 201); // 201 Created
+        ], 201);
     }
 
-    /**
-     * Mostrar los detalles de un centro de formación específico.
-     */
+
     public function show(Trainig_center $trainigCenter)
     {
         return response()->json([
@@ -51,9 +45,7 @@ class TrainigCenterController extends Controller
         ], 200);
     }
 
-    /**
-     * Actualizar un centro de formación existente.
-     */
+
     public function update(Request $request, Trainig_center $trainigCenter)
     {
         $request->validate([
@@ -70,9 +62,7 @@ class TrainigCenterController extends Controller
         ], 200);
     }
 
-    /**
-     * Eliminar un centro de formación.
-     */
+
     public function destroy(Trainig_center $trainigCenter)
     {
         $trainigCenter->delete();

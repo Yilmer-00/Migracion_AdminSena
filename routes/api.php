@@ -13,7 +13,6 @@ use App\Http\Controllers\FormacionController;
 
 Route::get('/areas', [AreaController::class, 'index']);
 
-// Rutas de API para Áreas (sin create ni edit)
 Route::get('/areas', [AreaController::class, 'index'])->name('api.v1.areas.index');
 Route::get('/areas/create', [AreaController::class, 'create'])->name('api.v1.area.create');
 Route::post('/areas', [AreaController::class, 'store'])->name('api.v1.areas.store');
@@ -23,8 +22,9 @@ Route::delete('/areas/{area}', [AreaController::class, 'destroy'])->name('api.v1
 
 Route::get('/training-centers', [TrainigCenterController::class, 'index'])->name('api.v1.trainig-center.index');
 Route::post('/training-centers', [TrainigCenterController::class, 'store'])->name('api.v1.trainig-center.store');
-Route::get('training-center/{trainingCenter}', [TrainigCenterController::class, 'show'])->name('api.v1.trainig-center.show');
-route::put('training-center/{trainingCenter}', [TrainigCenterController::class, 'update'])->name('api.v1.trainig-center.update');
+Route::get('/training-centers/{trainigCenter}', [TrainigCenterController::class, 'show'])->name('api.v1.trainig-center.show');
+Route::put('/training-centers/{trainigCenter}', [TrainigCenterController::class, 'update'])->name('api.v1.trainig-center.update');
+Route::delete('/training-centers/{trainigCenter}', [TrainigCenterController::class, 'destroy'])->name('api.v1.trainig-center.destroy');
 
 Route::get('/computers', [ComputerController::class, 'index'])->name('api.v1.computer.index');
 Route::post('/computers', [ComputerController::class, 'store'])->name('api.v1.computer.store');

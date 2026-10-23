@@ -9,12 +9,9 @@ use App\Models\Trainig_Center;
 
 class TeacherController extends Controller
 {
-    /**
-     * Mostrar una lista de todos los profesores con sus relaciones.
-     */
+
     public function index()
     {
-        // Cargamos los profesores junto con su área y centro de formación relacionados
         $teachers = Teacher::with(['area', 'trainig_center'])->get();
 
         return response()->json([
@@ -23,12 +20,9 @@ class TeacherController extends Controller
         ], 200);
     }
 
-    /**
-     * Almacenar un nuevo profesor.
-     */
+
     public function store(Request $request)
     {
-        // Validamos los datos y que las llaves foráneas realmente existan en la BD
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:teachers,email',
@@ -43,7 +37,6 @@ class TeacherController extends Controller
         $teacher->trainig_center_id = $request->trainig_center_id;
         $teacher->save();
 
-        // Cargamos las relaciones para que el JSON devuelva los objetos completos del área y centro
         $teacher->load(['area', 'trainig_center']);
 
         return response()->json([
@@ -53,9 +46,7 @@ class TeacherController extends Controller
         ], 201); // 201 Created
     }
 
-    /**
-     * Mostrar los detalles de un profesor específico.
-     */
+
     public function show(Teacher $teacher)
     {
         // Cargamos las relaciones antes de retornar
@@ -67,9 +58,7 @@ class TeacherController extends Controller
         ], 200);
     }
 
-    /**
-     * Actualizar un profesor existente.
-     */
+
     public function update(Request $request, Teacher $teacher)
     {
         $request->validate([
@@ -79,10 +68,8 @@ class TeacherController extends Controller
             'trainig_center_id' => 'required|exists:trainig_centers,id',
         ]);
 
-        // Actualizamos los campos necesarios
         $teacher->update($request->only(['name', 'email', 'area_id', 'trainig_center_id']));
 
-        // Recargamos las relaciones para la respuesta
         $teacher->load(['area', 'trainig_center']);
 
         return response()->json([
@@ -92,9 +79,7 @@ class TeacherController extends Controller
         ], 200);
     }
 
-    /**
-     * Eliminar un profesor.
-     */
+
     public function destroy(Teacher $teacher)
     {
         $teacher->delete();

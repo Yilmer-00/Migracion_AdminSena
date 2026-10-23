@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use app\Models\Trainig_center;
+use App\Models\Trainig_center;
 use App\Models\Area;
 
 class AreaController extends Controller
 {
-    /**
-     * Mostrar una lista de todas las áreas.
-     */
+    
+    //Mostrar una lista de todas las áreas.
+    
     public function index()
     {
         $areas = Area::all();
@@ -23,7 +23,7 @@ class AreaController extends Controller
 
     public function create()
     {
-        // Traemos las áreas y los centros de formación ordenados alfabéticamente
+        // Traemos las áreas y los centros de formación
         $areas = Area::select('id', 'name')->orderBy('name', 'asc')->get();
         $trainig_centers = Trainig_center::select('id', 'name')->orderBy('name', 'asc')->get();
 
@@ -56,9 +56,9 @@ class AreaController extends Controller
         ], 201); // 201 Created
     }
 
-    /**
-     * Mostrar los detalles de un área específica.
-     */
+    
+    //Mostrar los detalles de un área específica.
+    
     public function show(Area $area)
     {
         return response()->json([
@@ -67,9 +67,9 @@ class AreaController extends Controller
         ], 200);
     }
 
-    /**
-     * Actualizar un área existente.
-     */
+    
+    //Actualizar un área existente.
+    
     public function update(Request $request, Area $area)
     {
         $request->validate([
@@ -86,9 +86,9 @@ class AreaController extends Controller
         ], 200);
     }
 
-    /**
-     * Eliminar un área.
-     */
+    
+    //Eliminar un área.
+    
     public function destroy(Area $area)
     {
         $area->delete();

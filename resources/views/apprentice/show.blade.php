@@ -47,7 +47,7 @@
                 <div class="col-sm-4 fw-bold text-muted">Curso (Ficha):</div>
                 <div class="col-sm-8">
                     @if($apprentice->course)
-                    <span class="badge bg-primary">Ficha: {{ $apprentice->course->course_number }}</span>
+                    <span class="badge bg-primary">Ficha: {{ $apprentice->course->co0.urse_number }}</span>
                     <span class="text-secondary">({{ $apprentice->course->day }})</span>
                     @else
                     <span class="text-danger">Sin curso asignado</span>
