@@ -5,28 +5,29 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class teacher extends Model
+class Teacher extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'email',
+        'area_id',
+        'trainig_center_id',
+    ];
+
+    // Relación con el área de especialidad
     public function area()
     {
         return $this->belongsTo(Area::class, 'area_id');
     }
 
-    public function courses()
-    {
-        return $this->belongsTo(Trainig_center::class, 'trainig_center_id');
-    }
-
+    // Relación con el centro de formación
     public function trainig_center()
     {
-        return $this->belongsTo(Trainig_center::class, 'trainig_center_id');
+        return $this->belongsTo(
+            Trainig_Center::class,
+            'trainig_center_id'
+        );
     }
-    protected $fillable = [
-        'name',       // Ejemplo: nombre del profesor
-        'email',      // Ejemplo: correo electrónico
-        // 'document', // Agrega las columnas reales de tu tabla
-        // 'specialty',
-    ];
 }

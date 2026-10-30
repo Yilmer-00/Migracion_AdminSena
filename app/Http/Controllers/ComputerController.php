@@ -68,27 +68,27 @@ class ComputerController extends Controller
             'urlFoto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $data = $request->except(['_token', '_method', 'urlFoto']);
+        $computer->number = $request->input('number');
+        $computer->brand = $request->input('brand');
 
         if ($request->hasFile('urlFoto')) {
             if ($computer->urlFoto && Storage::exists('public/' . $computer->urlFoto)) {
                 Storage::delete('public/' . $computer->urlFoto);
             }
 
-            // Guardar la nueva foto
             $file = $request->file('urlFoto');
-            $nombreArchivo = "foto_" . time() . "." . $file->guessExtension();
-            $file->storeAs('public/images', $nombreArchivo);
+            $nombreArchivo = 'foto_' . time() . '.' . $file->guessExtension();
 
-            $data['urlFoto'] = 'images/' . $nombreArchivo;
+            $file->storeAs('public/images', $nombreArchivo);
+            $computer->urlFoto = 'images/' . $nombreArchivo;
         }
 
-        $computer->update($data);
+        $computer->save();
 
         return response()->json([
             'success' => true,
             'message' => 'Computador actualizado correctamente.',
-            'data' => $computer
+            'data' => $computer,
         ], 200);
     }
 

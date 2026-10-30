@@ -40,18 +40,27 @@ class CourseController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'course_number'      => 'required',
-            'day'                => 'required',
-            'area_id'            => 'required|exists:areas,id',
-            'training_center_id' => 'required|exists:trainig_centers,id',
-            'image'              => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
+            'course_number' => 'required',
+            'day' => 'required',
+            'area_id' => 'required|exists:areas,id',
+            'trainig_center_id' => 'required|exists:trainig_centers,id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
         ]);
 
         $course = new Course();
+
         $course->course_number = $request->input('course_number');
         $course->day = $request->input('day');
         $course->area_id = $request->input('area_id');
-        $course->trainig_center_id = $request->input('training_center_id');
+        $course->trainig_center_id = $request->input('trainig_center_id');
+
+        $course->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Curso registrado correctamente.',
+            'data' => $course
+        ], 201);
     }
 
 
@@ -68,13 +77,27 @@ class CourseController extends Controller
     public function update(Request $request, Course $course)
     {
         $request->validate([
-            'course_number'      => 'required',
-            'day'                => 'required',
-            'area_id'            => 'required|exists:areas,id',
-            'training_center_id' => 'required|exists:trainig_centers,id',
+            'course_number' => 'required',
+            'day' => 'required',
+            'area_id' => 'required|exists:areas,id',
+            'trainig_center_id' => 'required|exists:trainig_centers,id',
         ]);
-    }
 
+        $course->course_number = $request->input('course_number');
+        $course->day = $request->input('day');
+        $course->area_id = $request->input('area_id');
+        $course->trainig_center_id = $request->input('trainig_center_id');
+
+        $course->save();
+
+        $course->load(['area', 'trainig_center']);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Curso actualizado correctamente.',
+            'data' => $course
+        ], 200);
+    }
 
     public function destroy(Course $course)
     {

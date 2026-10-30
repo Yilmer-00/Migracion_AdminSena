@@ -14,7 +14,7 @@ class Course extends Model
         'course_number',
         'day',
         'area_id',
-        'training_center_id', // O trainig_center_id si lo dejaste sin la 'n' en la migración
+        'trainig_center_id', // O trainig_center_id si lo dejaste sin la 'n' en la migración
     ];
 
     // Relación Uno a Muchos (Inversa) -> Un curso pertenece a un Área

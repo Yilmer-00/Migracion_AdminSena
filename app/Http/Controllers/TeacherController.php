@@ -61,24 +61,23 @@ class TeacherController extends Controller
 
     public function update(Request $request, Teacher $teacher)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email',
             'area_id' => 'required|exists:areas,id',
             'trainig_center_id' => 'required|exists:trainig_centers,id',
         ]);
 
-        $teacher->update($request->only(['name', 'email', 'area_id', 'trainig_center_id']));
+        $teacher->update($validated);
 
         $teacher->load(['area', 'trainig_center']);
 
         return response()->json([
             'success' => true,
             'message' => 'Profesor actualizado correctamente.',
-            _('data') => $teacher
+            'data' => $teacher
         ], 200);
     }
-
 
     public function destroy(Teacher $teacher)
     {

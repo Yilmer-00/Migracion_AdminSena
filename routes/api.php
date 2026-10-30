@@ -26,11 +26,12 @@ Route::get('/training-centers/{trainigCenter}', [TrainigCenterController::class,
 Route::put('/training-centers/{trainigCenter}', [TrainigCenterController::class, 'update'])->name('api.v1.trainig-center.update');
 Route::delete('/training-centers/{trainigCenter}', [TrainigCenterController::class, 'destroy'])->name('api.v1.trainig-center.destroy');
 
+
 Route::get('/computers', [ComputerController::class, 'index'])->name('api.v1.computer.index');
 Route::post('/computers', [ComputerController::class, 'store'])->name('api.v1.computer.store');
-Route::get('computers/{computer}', [ComputerController::class, 'show'])->name('api.v1.computer.show');
-Route::put('computers/{computer}', [ComputerController::class, 'update'])->name('api.v1.computer.update');
-Route::delete('computers/{computers}', [ComputerController::class, 'destroy'])->name('api.v1.computer.destroy');
+Route::get('/computers/{computer}', [ComputerController::class, 'show'])->name('api.v1.computer.show');
+Route::put('/computers/{computer}', [ComputerController::class, 'update'])->name('api.v1.computer.update');
+Route::delete('/computers/{computer}', [ComputerController::class, 'destroy'])->name('api.v1.computer.destroy');
 
 Route::get('/apprentices', [ApprenticeController::class, 'index'])->name('api.v1.apprentice.index');
 Route::post('/apprentices', [ApprenticeController::class, 'store'])->name('api.v1.apprentice.store');
