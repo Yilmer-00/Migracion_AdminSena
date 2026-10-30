@@ -5,12 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Trainig_center;
 use App\Models\Area;
+use Cloudinary\Cloudinary;
 
 class AreaController extends Controller
 {
-    
-    //Mostrar una lista de todas las áreas.
-    
+    // Mostrar todas las áreas
     public function index()
     {
         $areas = Area::all();
@@ -21,11 +20,16 @@ class AreaController extends Controller
         ], 200);
     }
 
+    // Crear área (formulario o datos relacionados)
     public function create()
     {
-        // Traemos las áreas y los centros de formación
-        $areas = Area::select('id', 'name')->orderBy('name', 'asc')->get();
-        $trainig_centers = Trainig_center::select('id', 'name')->orderBy('name', 'asc')->get();
+        $areas = Area::select('id', 'name')
+            ->orderBy('name', 'asc')
+            ->get();
+
+        $trainig_centers = Trainig_center::select('id', 'name')
+            ->orderBy('name', 'asc')
+            ->get();
 
         return response()->json([
             'success' => true,
@@ -36,29 +40,46 @@ class AreaController extends Controller
         ], 200);
     }
 
-
-    //Almacenar una nueva área creada.
-
+    // Guardar una nueva área
     public function store(Request $request)
     {
-        // Validamos que el nombre sea obligatorio
         $request->validate([
             'name' => 'required|string|max:255',
+            'imagen' => 'required|image|mimes:jpg,jpeg,png,webp|max:5120',
         ]);
 
-        // Creamos el área
-        $area = Area::create($request->only('name'));
+        $file = $request->file('imagen');
+
+        $cloudinary = new Cloudinary([
+            'cloud' => [
+                'cloud_name' => config('services.cloudinary.cloud_name'),
+                'api_key' => config('services.cloudinary.api_key'),
+                'api_secret' => config('services.cloudinary.api_secret'),
+            ],
+            'url' => ['secure' => true],
+        ]);
+
+        $resultado = $cloudinary->uploadApi()->upload(
+            $file->getRealPath(),
+            [
+                'folder' => 'area',
+                'resource_type' => 'image',
+            ]
+        );
+
+        $area = Area::create([
+            'name' => $request->name,
+            'imagen_url' => $resultado['secure_url'],
+            'imagen_public_id' => $resultado['public_id'],
+        ]);
 
         return response()->json([
-            'success' => true,
-            'message' => 'Área creada correctamente.',
-            'data' => $area
-        ], 201); // 201 Created
+            'message' => 'Area creada correctamente',
+            'data' => $area,
+        ], 201);
     }
 
-    
-    //Mostrar los detalles de un área específica.
-    
+    // Mostrar un área específica
     public function show(Area $area)
     {
         return response()->json([
@@ -67,17 +88,16 @@ class AreaController extends Controller
         ], 200);
     }
 
-    
-    //Actualizar un área existente.
-    
+    // Actualizar un área
     public function update(Request $request, Area $area)
     {
         $request->validate([
             'name' => 'required|string|max:255',
         ]);
 
-        // Actualizamos los datos
-        $area->update($request->only('name'));
+        $area->update([
+            'name' => $request->name,
+        ]);
 
         return response()->json([
             'success' => true,
@@ -86,9 +106,7 @@ class AreaController extends Controller
         ], 200);
     }
 
-    
-    //Eliminar un área.
-    
+    // Eliminar un área
     public function destroy(Area $area)
     {
         $area->delete();

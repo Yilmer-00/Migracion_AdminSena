@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Trainig_center;
+use Cloudinary\Cloudinary;
 
 class TrainigCenterController extends Controller
 {
-    
-    
+
+
     public function index()
     {
         $trainigCenters = Trainig_center::all();
@@ -25,14 +26,44 @@ class TrainigCenterController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'location' => 'required|string|max:255',
+            'imagen' => 'required|image|mimes:jpg,jpeg,png,webp|max:5120',
         ]);
 
-        $trainigCenter = Trainig_center::create($request->only(['name', 'location']));
+        // Obtener imagen
+        $file = $request->file('imagen');
+
+        // Configurar Cloudinary
+        $cloudinary = new Cloudinary([
+            'cloud' => [
+                'cloud_name' => config('services.cloudinary.cloud_name'),
+                'api_key' => config('services.cloudinary.api_key'),
+                'api_secret' => config('services.cloudinary.api_secret'),
+            ],
+            'url' => [
+                'secure' => true,
+            ],
+        ]);
+
+        // Subir imagen a Cloudinary
+        $resultado = $cloudinary->uploadApi()->upload(
+            $file->getRealPath(),
+            [
+                'folder' => 'trainigCenter',
+                'resource_type' => 'image',
+            ]
+        );
+
+        // Crear centro 
+        $trainigCenter = Trainig_center::create([
+            'name' => $request->name,
+            'location' => $request->location,
+            'imagen_url' => $resultado['secure_url'],
+            'imagen_public_id' => $resultado['public_id'],
+        ]);
 
         return response()->json([
-            'success' => true,
-            'message' => 'Centro de formación creado correctamente.',
-            'data' => $trainigCenter
+            'message' => 'Centro de formacion creado correctamente',
+            'data' => $trainigCenter,
         ], 201);
     }
 
