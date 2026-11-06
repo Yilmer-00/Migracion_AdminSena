@@ -9,10 +9,9 @@ class Computer extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'brand',          // Ejemplo: marca
-        'model',          // Ejemplo: modelo
-        'serial_number',   // Ejemplo: número de serie
-        // 'status',      // Descomenta y agrega los campos reales que uses
+        'brand',          
+        'model',          
+        'imagen_url',
+        'imagen_public_id',   
     ];
-
 }
